@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import top.wuhaojie.week.R;
-import top.wuhaojie.week.entities.TaskEntity;
+import top.wuhaojie.week.entities.TaskDetailEntity;
 
 /**
  * Created by wuhaojie on 2016/11/29 21:35.
@@ -19,9 +19,9 @@ import top.wuhaojie.week.entities.TaskEntity;
 public class TaskAdapter extends RecyclerView.Adapter {
 
     private Context mContext;
-    private List<TaskEntity> mList;
+    private List<TaskDetailEntity> mList;
 
-    public TaskAdapter(Context context, List<TaskEntity> list) {
+    public TaskAdapter(Context context, List<TaskDetailEntity> list) {
         this.mContext = context;
         this.mList = list;
     }

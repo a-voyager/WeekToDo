@@ -8,10 +8,12 @@ import android.support.v4.app.Fragment;
 
 public class MainPageItem {
 
+    private int dayOfWeek;
     private String mTitle;
     private Fragment mFragment;
 
-    public MainPageItem(String title, Fragment fragment) {
+    public MainPageItem(int dayOfWeek, String title, Fragment fragment) {
+        this.dayOfWeek = dayOfWeek;
         mTitle = title;
         mFragment = fragment;
     }
@@ -30,5 +32,13 @@ public class MainPageItem {
 
     public void setFragment(Fragment fragment) {
         mFragment = fragment;
+    }
+
+    public int getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public void setDayOfWeek(int dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
     }
 }

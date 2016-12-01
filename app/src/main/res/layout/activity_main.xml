@@ -41,7 +41,7 @@
         android:layout_gravity="bottom"
         android:layout_margin="@dimen/fab_margin"
         android:clickable="true"
-        android:src="@drawable/ic_add_white"
+        android:src="@drawable/ic_add_white_48dp"
         app:elevation="0dp"
         app:rippleColor="#FFF"/>
 

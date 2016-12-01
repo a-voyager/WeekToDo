@@ -19,6 +19,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name=".views.NewActivity"
+            android:label="添加任务"
+            android:theme="@style/AppTheme.NoActionBar.TRANSPARENT">
+        </activity>
     </application>
 
 </manifest>

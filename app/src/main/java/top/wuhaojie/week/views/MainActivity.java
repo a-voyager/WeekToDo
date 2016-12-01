@@ -1,5 +1,6 @@
 package top.wuhaojie.week.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -7,7 +8,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 
 import java.util.Calendar;
@@ -19,6 +19,7 @@ import butterknife.OnClick;
 import io.realm.RealmResults;
 import top.wuhaojie.week.R;
 import top.wuhaojie.week.adpter.MainPageAdapter;
+import top.wuhaojie.week.constant.Constants;
 import top.wuhaojie.week.data.DataDao;
 import top.wuhaojie.week.data.PageFactory;
 import top.wuhaojie.week.entities.MainPageItem;
@@ -74,10 +75,13 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
 
     @OnClick(R.id.fab)
     public void onClick() {
-        DataDao dao = DataDao.getInstance();
-        int i = mVp.getCurrentItem();
-        dao.insertTask(new TaskDetailEntity(i + 1));
-        Log.d(TAG, "insert：" + (i + 1));
+//        DataDao dao = DataDao.getInstance();
+//        int i = mVp.getCurrentItem();
+//        dao.insertTask(new TaskDetailEntity(i + 1));
+//        Log.d(TAG, "insert：" + (i + 1));
+
+        Intent intent = new Intent(this, NewActivity.class);
+        startActivityForResult(intent, Constants.NEW_ACTIVITY_REQUEST_CODE);
 
     }
 
@@ -87,4 +91,10 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
         return true;
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
 }

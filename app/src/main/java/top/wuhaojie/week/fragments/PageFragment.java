@@ -10,17 +10,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.RealmResults;
 import top.wuhaojie.week.R;
 import top.wuhaojie.week.adpter.TaskAdapter;
-import top.wuhaojie.week.data.DataDao;
 import top.wuhaojie.week.entities.TaskDetailEntity;
 
 /**
@@ -40,16 +37,6 @@ public class PageFragment extends Fragment {
         Log.d("PageFragment", "constructor()");
     }
 
-    {
-        mList.add(new TaskDetailEntity());
-        mList.add(new TaskDetailEntity());
-        mList.add(new TaskDetailEntity());
-        mList.add(new TaskDetailEntity());
-        mList.add(new TaskDetailEntity());
-        mList.add(new TaskDetailEntity());
-        mList.add(new TaskDetailEntity());
-        mList.add(new TaskDetailEntity());
-    }
 
     @Nullable
     @Override
@@ -60,33 +47,21 @@ public class PageFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         initViews();
-        loadData();
 
         return view;
     }
 
 
-    private void loadData() {
-
-        DataDao dao = DataDao.getInstance();
-//        dao.insertTask(new TaskDetailEntity());
-
-        Log.d(TAG, "index = " + mListener.getCurrIndex());
-        RealmResults<TaskDetailEntity> results = dao.findAllTask(mListener.getCurrIndex() + 1);
-
-        Toast.makeText(getActivity(), "完成: " + results, Toast.LENGTH_SHORT).show();
-    }
 
     private void initViews() {
         mAdapter = new TaskAdapter(getActivity(), mList);
         mRv.setAdapter(mAdapter);
         mRv.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-
     }
 
     public void insertTask(TaskDetailEntity task) {
-
+        if (!mList.contains(task))
+            mList.add(task);
     }
 
     private OnPageFragmentInteractionListener mListener;
@@ -102,7 +77,6 @@ public class PageFragment extends Fragment {
     }
 
     public interface OnPageFragmentInteractionListener {
-        int getCurrIndex();
     }
 
 }

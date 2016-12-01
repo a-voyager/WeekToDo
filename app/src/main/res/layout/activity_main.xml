@@ -42,6 +42,7 @@
         android:layout_margin="@dimen/fab_margin"
         android:clickable="true"
         android:src="@drawable/ic_add_white"
+        app:elevation="0dp"
         app:rippleColor="#FFF"/>
 
 </android.support.design.widget.CoordinatorLayout>

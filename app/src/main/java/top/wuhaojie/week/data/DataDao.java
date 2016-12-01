@@ -1,7 +1,5 @@
 package top.wuhaojie.week.data;
 
-import java.util.Calendar;
-
 import io.realm.Realm;
 import io.realm.RealmResults;
 import top.wuhaojie.week.entities.TaskDetailEntity;
@@ -34,7 +32,7 @@ public class DataDao {
 
     public void insertTask(TaskDetailEntity taskDetailEntity) {
         mRealm.executeTransaction(realm -> {
-            taskDetailEntity.setDayOfWeek(Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
+//            taskDetailEntity.setDayOfWeek(Calendar.THURSDAY);
             taskDetailEntity.setTimeStamp(System.currentTimeMillis());
             taskDetailEntity.setTitle("无标题");
             taskDetailEntity.setContent("测试文本");

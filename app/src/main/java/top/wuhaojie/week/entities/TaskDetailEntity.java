@@ -15,6 +15,12 @@ public class TaskDetailEntity extends RealmObject {
     private long timeStamp;
     private int state;
 
+    public TaskDetailEntity() {
+    }
+
+    public TaskDetailEntity(int dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
 
     public int getDayOfWeek() {
         return dayOfWeek;

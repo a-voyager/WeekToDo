@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 
 import java.util.Calendar;
@@ -15,6 +16,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.RealmResults;
 import top.wuhaojie.week.R;
 import top.wuhaojie.week.adpter.MainPageAdapter;
 import top.wuhaojie.week.data.DataDao;
@@ -25,6 +27,7 @@ import top.wuhaojie.week.fragments.PageFragment;
 
 public class MainActivity extends AppCompatActivity implements PageFragment.OnPageFragmentInteractionListener {
 
+    public static final String TAG = "MainActivity";
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.tab)
@@ -35,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
     FloatingActionButton mFab;
     @BindView(R.id.cl_main)
     CoordinatorLayout mClMain;
+    private List<MainPageItem> mItems;
+    //    public volatile int mVpCurrIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +48,9 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
 
-        List<MainPageItem> items = PageFactory.createPages();
+        mItems = PageFactory.createPages();
 
-        MainPageAdapter adapter = new MainPageAdapter(getSupportFragmentManager(), items);
+        MainPageAdapter adapter = new MainPageAdapter(getSupportFragmentManager(), mItems);
 
         mTab.setupWithViewPager(mVp);
         mVp.setAdapter(adapter);
@@ -54,19 +59,25 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
         mVp.setCurrentItem(dayOfWeek - 1, true);
 
 
+        // 坑: mVp.getCurrentItem() 不能获得第一页和最后一页的Index
+
+        DataDao dataDao = DataDao.getInstance();
+        RealmResults<TaskDetailEntity> allTask = dataDao.findAllTask();
+        for (TaskDetailEntity t : allTask) {
+            int day = t.getDayOfWeek();
+            PageFragment fragment = (PageFragment) mItems.get(day - 1).getFragment();
+            fragment.insertTask(t);
+        }
+
+
     }
 
     @OnClick(R.id.fab)
     public void onClick() {
-//        SnackBarUtils.show(mClMain, "Hello");
-//
         DataDao dao = DataDao.getInstance();
-        dao.insertTask(new TaskDetailEntity());
-//
-//
-//        RealmResults<TaskDetailEntity> results = dao.findAllTask(Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
-//
-//        Toast.makeText(MainActivity.this, "完成: " + results, Toast.LENGTH_SHORT).show();
+        int i = mVp.getCurrentItem();
+        dao.insertTask(new TaskDetailEntity(i + 1));
+        Log.d(TAG, "insert：" + (i + 1));
 
     }
 
@@ -76,8 +87,4 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
         return true;
     }
 
-    @Override
-    public int getCurrIndex() {
-        return mVp.getCurrentItem();
-    }
 }

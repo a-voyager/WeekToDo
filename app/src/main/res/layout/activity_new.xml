@@ -6,6 +6,7 @@
     android:id="@+id/cl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="-24dp"
     android:fitsSystemWindows="true"
     tools:context="top.wuhaojie.week.views.NewActivity">
 
@@ -54,6 +55,6 @@
         android:clickable="true"
         android:src="@drawable/ic_check_white_48dp"
         app:elevation="0dp"
-        app:rippleColor="#FFF"/>
+        app:rippleColor="@color/fabRippleColor"/>
 
 </android.support.design.widget.CoordinatorLayout>

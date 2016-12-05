@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
         mVp.setCurrentItem(dayOfWeek - 1, true);
 
 
-        // 坑: mVp.getCurrentItem() 不能获得第一页和最后一页的Index
+        // 坑: mVp.getCurrentItem() 某些时候不能获得第一页和最后一页的Index
 
         DataDao dataDao = DataDao.getInstance();
         RealmResults<TaskDetailEntity> allTask = dataDao.findAllTask();
@@ -80,7 +80,9 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
 //        dao.insertTask(new TaskDetailEntity(i + 1));
 //        Log.d(TAG, "insert：" + (i + 1));
 
+        int i = mVp.getCurrentItem();
         Intent intent = new Intent(this, NewActivity.class);
+        intent.putExtra(Constants.INTENT_EXTRA_DAY_OF_WEEK, i + 1);
         startActivityForResult(intent, Constants.NEW_ACTIVITY_REQUEST_CODE);
 
     }
@@ -95,6 +97,10 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        if (requestCode != Constants.NEW_ACTIVITY_REQUEST_CODE) return;
+        Bundle bundle = data.getExtras();
+        TaskDetailEntity task = (TaskDetailEntity) bundle.getSerializable(Constants.INTENT_BUNDLE_NEW_TASK_DETAIL);
+        PageFragment fragment = (PageFragment) mItems.get(mVp.getCurrentItem()).getFragment();
+        fragment.insertTask(task);
     }
 }

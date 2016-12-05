@@ -1,13 +1,16 @@
 package top.wuhaojie.week.entities;
 
+import java.io.Serializable;
+
 import io.realm.RealmObject;
 
 /**
  * Created by wuhaojie on 2016/11/30 9:28.
  */
 
-public class TaskDetailEntity extends RealmObject {
+public class TaskDetailEntity extends RealmObject implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private int dayOfWeek;
     private String title;
     private String content;

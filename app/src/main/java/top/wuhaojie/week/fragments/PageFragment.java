@@ -52,7 +52,6 @@ public class PageFragment extends Fragment {
     }
 
 
-
     private void initViews() {
         mAdapter = new TaskAdapter(getActivity(), mList);
         mRv.setAdapter(mAdapter);

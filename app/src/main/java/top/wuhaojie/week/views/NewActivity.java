@@ -77,7 +77,7 @@ public class NewActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constants.INTENT_BUNDLE_NEW_TASK_DETAIL, taskDetailEntity);
         intent.putExtras(bundle);
-        setResult(Constants.NEW_ACTIVITY_REQUEST_CODE, intent);
+        setResult(RESULT_OK, intent);
         finish();
 
     }

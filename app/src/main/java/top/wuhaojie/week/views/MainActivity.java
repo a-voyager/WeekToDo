@@ -96,13 +96,12 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode != Constants.NEW_ACTIVITY_REQUEST_CODE) return;
+        if (requestCode != Constants.NEW_ACTIVITY_REQUEST_CODE || resultCode != RESULT_OK) return;
         Bundle bundle = data.getExtras();
         TaskDetailEntity task = (TaskDetailEntity) bundle.getSerializable(Constants.INTENT_BUNDLE_NEW_TASK_DETAIL);
         PageFragment fragment = (PageFragment) mItems.get(mVp.getCurrentItem()).getFragment();
         fragment.insertTask(task);
         DataDao dao = DataDao.getInstance();
-        int i = mVp.getCurrentItem();
-        dao.insertTask(new TaskDetailEntity(i + 1));
+        dao.insertTask(task);
     }
 }

@@ -74,6 +74,24 @@ public class TaskDetailEntity extends RealmObject implements Serializable {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof TaskDetailEntity)) return false;
+        TaskDetailEntity o = (TaskDetailEntity) obj;
+
+
+        if ((o.title == title || o.title.equals(title))
+                && (o.content == content || o.content.equals(content))
+                && o.state == state
+                && (o.icon == icon || o.icon.equals(icon))
+                && o.timeStamp == timeStamp
+                && o.dayOfWeek == dayOfWeek)
+            return true;
+        return false;
+    }
+
+    @Override
     public String toString() {
         return "TaskDetailEntity{" +
                 "dayOfWeek=" + dayOfWeek +

@@ -22,7 +22,8 @@
         <activity
             android:name=".views.NewActivity"
             android:label="添加任务"
-            android:theme="@style/AppTheme.NoActionBar.TRANSPARENT">
+            android:theme="@style/AppTheme.NoActionBar.TRANSPARENT"
+            android:windowSoftInputMode="adjustResize">
         </activity>
     </application>
 

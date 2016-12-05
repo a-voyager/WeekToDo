@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import top.wuhaojie.week.R;
 import top.wuhaojie.week.entities.TaskDetailEntity;
 
@@ -17,6 +19,7 @@ import top.wuhaojie.week.entities.TaskDetailEntity;
  */
 
 public class TaskAdapter extends RecyclerView.Adapter {
+
 
     private Context mContext;
     private List<TaskDetailEntity> mList;
@@ -36,6 +39,9 @@ public class TaskAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Holder h = (Holder) holder;
+        TaskDetailEntity entity = mList.get(position);
+        h.mTvTitle.setText(entity.getTitle());
+        h.mTvContent.setText(entity.getContent());
     }
 
     @Override
@@ -43,12 +49,16 @@ public class TaskAdapter extends RecyclerView.Adapter {
         return mList.size();
     }
 
-    private static class Holder extends RecyclerView.ViewHolder {
+    static class Holder extends RecyclerView.ViewHolder {
 
-        TextView mTitle;
+        @BindView(R.id.tv_title)
+        TextView mTvTitle;
+        @BindView(R.id.tv_content)
+        TextView mTvContent;
 
         public Holder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

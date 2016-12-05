@@ -62,7 +62,7 @@ public class NewActivity extends AppCompatActivity {
             return;
         }
         if (TextUtils.isEmpty(title)) {
-            title = content.substring(0, Math.min(10, content.length()));
+            title = content.substring(0, Math.min(5, content.length()));
         }
 
         int dayOfWeek = getIntent().getIntExtra(Constants.INTENT_EXTRA_DAY_OF_WEEK, Calendar.getInstance().get(Calendar.DAY_OF_WEEK));

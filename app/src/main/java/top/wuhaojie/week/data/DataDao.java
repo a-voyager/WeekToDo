@@ -3,7 +3,6 @@ package top.wuhaojie.week.data;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import top.wuhaojie.week.entities.TaskDetailEntity;
-import top.wuhaojie.week.entities.TaskState;
 
 /**
  * Created by wuhaojie on 2016/11/30 9:26.
@@ -33,11 +32,11 @@ public class DataDao {
     public void insertTask(TaskDetailEntity taskDetailEntity) {
         mRealm.executeTransaction(realm -> {
 //            taskDetailEntity.setDayOfWeek(Calendar.THURSDAY);
-            taskDetailEntity.setTimeStamp(System.currentTimeMillis());
-            taskDetailEntity.setTitle("无标题");
-            taskDetailEntity.setContent("测试文本");
-            taskDetailEntity.setIcon(null);
-            taskDetailEntity.setState(TaskState.DEFAULT);
+//            taskDetailEntity.setTimeStamp(System.currentTimeMillis());
+//            taskDetailEntity.setTitle("无标题");
+//            taskDetailEntity.setContent("测试文本");
+//            taskDetailEntity.setIcon(null);
+//            taskDetailEntity.setState(TaskState.DEFAULT);
             realm.copyToRealm(taskDetailEntity);
         });
     }

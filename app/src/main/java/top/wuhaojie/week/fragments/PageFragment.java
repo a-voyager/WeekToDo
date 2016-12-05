@@ -61,6 +61,8 @@ public class PageFragment extends Fragment {
     public void insertTask(TaskDetailEntity task) {
         if (!mList.contains(task))
             mList.add(task);
+        if (mAdapter != null)
+            mAdapter.notifyItemInserted(mList.size() - 1);
     }
 
     private OnPageFragmentInteractionListener mListener;

@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
     @BindView(R.id.cl_main)
     CoordinatorLayout mClMain;
     private List<MainPageItem> mItems;
-    //    public volatile int mVpCurrIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,5 +101,8 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
         TaskDetailEntity task = (TaskDetailEntity) bundle.getSerializable(Constants.INTENT_BUNDLE_NEW_TASK_DETAIL);
         PageFragment fragment = (PageFragment) mItems.get(mVp.getCurrentItem()).getFragment();
         fragment.insertTask(task);
+        DataDao dao = DataDao.getInstance();
+        int i = mVp.getCurrentItem();
+        dao.insertTask(new TaskDetailEntity(i + 1));
     }
 }

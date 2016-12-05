@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
@@ -48,8 +49,21 @@ public class NewActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) finish();
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+            case R.id.action_choose_icon:
+                showIconChooseDialog();
+                break;
+        }
+        return true;
+    }
+
+    private void showIconChooseDialog() {
+        SnackBarUtils.show(mCl, "选择主题");
+
+
     }
 
     @OnClick(R.id.fab)
@@ -81,4 +95,13 @@ public class NewActivity extends AppCompatActivity {
         finish();
 
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.edit_menu, menu);
+        return true;
+    }
+
+
 }

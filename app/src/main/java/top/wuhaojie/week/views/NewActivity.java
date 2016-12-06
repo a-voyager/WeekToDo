@@ -10,14 +10,22 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import top.wuhaojie.week.R;
 import top.wuhaojie.week.constant.Constants;
+import top.wuhaojie.week.data.ImageFactory;
 import top.wuhaojie.week.entities.TaskDetailEntity;
 import top.wuhaojie.week.entities.TaskState;
 import top.wuhaojie.week.utils.SnackBarUtils;
@@ -34,6 +42,12 @@ public class NewActivity extends AppCompatActivity {
     EditText mEtTitle;
     @BindView(R.id.et_content)
     EditText mEtContent;
+    @BindView(R.id.sdv_bg)
+    SimpleDraweeView mSdvBg;
+    @BindView(R.id.tv_date)
+    TextView mTvDate;
+    private int mCurrIndex;
+    private List<String> mBgImgs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +58,17 @@ public class NewActivity extends AppCompatActivity {
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mEtContent.requestFocus();
+        mBgImgs = ImageFactory.createBgImgs();
+        mCurrIndex = new Random(System.currentTimeMillis()).nextInt(mBgImgs.size());
+        loadBgImgWithIndex(mCurrIndex);
+        String date = new SimpleDateFormat("yyyy/mm/dd").format(new Date());
+        mTvDate.setText(date);
+    }
+
+    public void loadBgImgWithIndex(int i) {
+        String s = mBgImgs.get(i);
+        mSdvBg.setImageURI(s);
+        mCurrIndex = i;
     }
 
 
@@ -61,7 +86,8 @@ public class NewActivity extends AppCompatActivity {
     }
 
     private void showIconChooseDialog() {
-        SnackBarUtils.show(mCl, "选择主题");
+
+        ChoosePaperColorDialog.newInstance(mCurrIndex).show(getSupportFragmentManager(), "IconChooseDialog");
 
 
     }
@@ -85,7 +111,7 @@ public class NewActivity extends AppCompatActivity {
         taskDetailEntity.setContent(content);
         taskDetailEntity.setState(TaskState.DEFAULT);
         taskDetailEntity.setTimeStamp(System.currentTimeMillis());
-        taskDetailEntity.setIcon(null);
+        taskDetailEntity.setIcon(mBgImgs.get(mCurrIndex));
 
         Intent intent = new Intent();
         Bundle bundle = new Bundle();

@@ -92,6 +92,28 @@ public class TaskDetailEntity extends RealmObject implements Serializable {
     }
 
     @Override
+    protected Object clone() throws CloneNotSupportedException {
+        TaskDetailEntity entity = new TaskDetailEntity(dayOfWeek);
+        entity.title = title;
+        entity.content = content;
+        entity.icon = icon;
+        entity.timeStamp = timeStamp;
+        entity.state = state;
+        return entity;
+    }
+
+    public TaskDetailEntity cloneObj() {
+        TaskDetailEntity entity = new TaskDetailEntity(dayOfWeek);
+        entity.title = title;
+        entity.content = content;
+        entity.icon = icon;
+        entity.timeStamp = timeStamp;
+        entity.state = state;
+        return entity;
+    }
+
+
+    @Override
     public String toString() {
         return "TaskDetailEntity{" +
                 "dayOfWeek=" + dayOfWeek +

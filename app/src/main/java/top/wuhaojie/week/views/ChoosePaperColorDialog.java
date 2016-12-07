@@ -26,10 +26,10 @@ public class ChoosePaperColorDialog extends DialogFragment {
 
     private ChooseDialogAdapter mChooseDialogAdapter;
 
-    public static ChoosePaperColorDialog newInstance(int currCheckItem) {
+    public static ChoosePaperColorDialog newInstance(String currCheckItemUri) {
         ChoosePaperColorDialog dialog = new ChoosePaperColorDialog();
         Bundle bundle = new Bundle();
-        bundle.putInt(Constants.CHOOSE_PAPER_DIALOG_CHECK_ITEM_BUNDLE_KEY, currCheckItem);
+        bundle.putString(Constants.CHOOSE_PAPER_DIALOG_CHECK_ITEM_BUNDLE_KEY, currCheckItemUri);
         dialog.setArguments(bundle);
         return dialog;
     }
@@ -57,7 +57,7 @@ public class ChoosePaperColorDialog extends DialogFragment {
         ButterKnife.bind(this, view);
         mRvDlChooseColor.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         mChooseDialogAdapter = new ChooseDialogAdapter(getActivity());
-        mChooseDialogAdapter.setCheckItem(getArguments().getInt(Constants.CHOOSE_PAPER_DIALOG_CHECK_ITEM_BUNDLE_KEY));
+        mChooseDialogAdapter.setCheckItem(getArguments().getString(Constants.CHOOSE_PAPER_DIALOG_CHECK_ITEM_BUNDLE_KEY));
         mChooseDialogAdapter.setOnItemClickListener((v, position) -> {
             ((NewActivity) getActivity()).loadBgImgWithIndex(position);
 

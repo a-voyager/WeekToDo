@@ -1,5 +1,6 @@
 package top.wuhaojie.week.views;
 
+import android.animation.Animator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -9,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -46,8 +49,52 @@ public class NewActivity extends AppCompatActivity {
     SimpleDraweeView mSdvBg;
     @BindView(R.id.tv_date)
     TextView mTvDate;
-    private int mCurrIndex;
-    private List<String> mBgImgs;
+    private final List<String> mBgImgs = ImageFactory.createBgImgs();
+    private String mCurrBgUri;
+
+    private interface IState {
+        void initView(Intent intent, Bundle savedInstanceState);
+    }
+
+    private class CreateNew implements IState {
+
+        @Override
+        public void initView(Intent intent, Bundle savedInstanceState) {
+            mEtContent.requestFocus();
+            int i = new Random(System.currentTimeMillis()).nextInt(mBgImgs.size());
+            loadBgImgWithIndex(i);
+            String date = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+            mTvDate.setText(date);
+        }
+    }
+
+    private class EditOld implements IState {
+
+        @Override
+        public void initView(Intent intent, Bundle savedInstanceState) {
+
+            mEtTitle.setFocusable(false);
+            mEtTitle.setOnTouchListener((v, event) -> {
+                mEtTitle.setFocusableInTouchMode(true);
+                return false;
+            });
+
+            mEtContent.setFocusable(false);
+            mEtContent.setOnTouchListener((v, event) -> {
+                mEtContent.setFocusableInTouchMode(true);
+                return false;
+            });
+
+            TaskDetailEntity entity = (TaskDetailEntity) intent.getSerializableExtra(Constants.INTENT_EXTRA_EDIT_TASK_DETAIL_ENTITY);
+            intent.putExtra(Constants.INTENT_EXTRA_DAY_OF_WEEK, entity.getDayOfWeek());
+            mEtTitle.setText(entity.getTitle());
+            mEtContent.setText(entity.getContent());
+            loadBgImgWithUri(entity.getIcon());
+            String date = new SimpleDateFormat("yyyy/MM/dd").format(new Date(entity.getTimeStamp()));
+            mTvDate.setText(date);
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,18 +104,45 @@ public class NewActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mEtContent.requestFocus();
-        mBgImgs = ImageFactory.createBgImgs();
-        mCurrIndex = new Random(System.currentTimeMillis()).nextInt(mBgImgs.size());
-        loadBgImgWithIndex(mCurrIndex);
-        String date = new SimpleDateFormat("yyyy/mm/dd").format(new Date());
-        mTvDate.setText(date);
+
+        Intent intent = getIntent();
+        int mode = intent.getIntExtra(Constants.INTENT_EXTRA_MODE_OF_NEW_ACT, Constants.MODE_OF_NEW_ACT.MODE_CREATE);
+        IState state;
+        if (mode == Constants.MODE_OF_NEW_ACT.MODE_EDIT)
+            state = new EditOld();
+        else
+            state = new CreateNew();
+        state.initView(intent, savedInstanceState);
+
+
+        View decorView = this.getWindow().getDecorView();
+//            View decorView = mToolbar;
+        decorView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                v.removeOnLayoutChangeListener(this);
+
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    int x = (int) (mFab.getWidth() / 2 + mFab.getX());
+                    int y = (int) (mFab.getHeight() / 2 + mFab.getY());
+                    Animator animator = ViewAnimationUtils.createCircularReveal(decorView, x, y, 0, decorView.getHeight());
+                    animator.setDuration(400);
+                    animator.start();
+                }
+            }
+        });
+
+
     }
 
+
     public void loadBgImgWithIndex(int i) {
-        String s = mBgImgs.get(i);
-        mSdvBg.setImageURI(s);
-        mCurrIndex = i;
+        loadBgImgWithUri(mBgImgs.get(i));
+    }
+
+    public void loadBgImgWithUri(String uri) {
+        mCurrBgUri = uri;
+        mSdvBg.setImageURI(uri);
     }
 
 
@@ -87,13 +161,13 @@ public class NewActivity extends AppCompatActivity {
 
     private void showIconChooseDialog() {
 
-        ChoosePaperColorDialog.newInstance(mCurrIndex).show(getSupportFragmentManager(), "IconChooseDialog");
+        ChoosePaperColorDialog.newInstance(mCurrBgUri).show(getSupportFragmentManager(), "IconChooseDialog");
 
 
     }
 
     @OnClick(R.id.fab)
-    public void onClick() {
+    public void onClick(View v) {
         String title = mEtTitle.getText().toString().trim();
         String content = mEtContent.getText().toString().trim();
 
@@ -111,7 +185,7 @@ public class NewActivity extends AppCompatActivity {
         taskDetailEntity.setContent(content);
         taskDetailEntity.setState(TaskState.DEFAULT);
         taskDetailEntity.setTimeStamp(System.currentTimeMillis());
-        taskDetailEntity.setIcon(mBgImgs.get(mCurrIndex));
+        taskDetailEntity.setIcon(mCurrBgUri);
 
         Intent intent = new Intent();
         Bundle bundle = new Bundle();

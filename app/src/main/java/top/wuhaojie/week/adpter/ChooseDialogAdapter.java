@@ -35,6 +35,8 @@ public class ChooseDialogAdapter extends RecyclerView.Adapter {
     private final LayoutInflater mInflater;
     private List<Item> mList = new ArrayList<>();
     private Context mContext;
+
+
     private int mCheckItem;
 
 
@@ -54,9 +56,19 @@ public class ChooseDialogAdapter extends RecyclerView.Adapter {
         return mCheckItem;
     }
 
+    public void setCheckItem(String checkItem) {
+        for (int i = 0; i < mList.size(); i++) {
+            if (mList.get(i).uri.equals(checkItem)) {
+                mCheckItem = i;
+                break;
+            }
+        }
+        notifyItemChanged(mCheckItem);
+    }
+
     public void setCheckItem(int checkItem) {
         mCheckItem = checkItem;
-        notifyItemChanged(checkItem);
+        notifyItemChanged(mCheckItem);
     }
 
     @Override

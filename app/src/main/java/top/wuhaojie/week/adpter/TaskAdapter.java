@@ -40,8 +40,7 @@ public class TaskAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Holder h = (Holder) holder;
         TaskDetailEntity entity = mList.get(position);
-        h.mTvTitle.setText(entity.getTitle());
-        h.mTvContent.setText(entity.getContent());
+        h.setEntity(entity);
     }
 
     @Override
@@ -49,18 +48,36 @@ public class TaskAdapter extends RecyclerView.Adapter {
         return mList.size();
     }
 
-    static class Holder extends RecyclerView.ViewHolder {
+    class Holder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.tv_title)
         TextView mTvTitle;
         @BindView(R.id.tv_content)
         TextView mTvContent;
+        TaskDetailEntity entity;
 
-        public Holder(View itemView) {
+
+        Holder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(v -> mListener.onItemClick(getAdapterPosition(), entity));
+        }
+
+        void setEntity(TaskDetailEntity entity) {
+            this.entity = entity;
+            mTvTitle.setText(entity.getTitle());
+            mTvContent.setText(entity.getContent());
         }
     }
 
 
+    public interface OnItemClickListener {
+        void onItemClick(int position, TaskDetailEntity entity);
+    }
+
+    private OnItemClickListener mListener;
+
+    public void setListener(final OnItemClickListener listener) {
+        mListener = listener;
+    }
 }

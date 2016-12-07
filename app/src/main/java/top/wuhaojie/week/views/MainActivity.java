@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
         int i = mVp.getCurrentItem();
         Intent intent = new Intent(this, NewActivity.class);
         intent.putExtra(Constants.INTENT_EXTRA_DAY_OF_WEEK, i + 1);
+        intent.putExtra(Constants.INTENT_EXTRA_MODE_OF_NEW_ACT, Constants.MODE_OF_NEW_ACT.MODE_CREATE);
         startActivityForResult(intent, Constants.NEW_ACTIVITY_REQUEST_CODE);
 
     }
@@ -103,5 +104,14 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
         fragment.insertTask(task);
         DataDao dao = DataDao.getInstance();
         dao.insertTask(task);
+    }
+
+    @Override
+    public void toEditActivity(int position, TaskDetailEntity entity) {
+        Intent intent = new Intent(this, NewActivity.class);
+        intent.putExtra(Constants.INTENT_EXTRA_EDIT_TASK_DETAIL_ENTITY, entity.cloneObj());
+        intent.putExtra(Constants.INTENT_EXTRA_MODE_OF_NEW_ACT, Constants.MODE_OF_NEW_ACT.MODE_EDIT);
+//        startActivityForResult(intent, Constants.NEW_ACTIVITY_REQUEST_CODE);
+        startActivity(intent);
     }
 }

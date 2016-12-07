@@ -54,6 +54,7 @@ public class PageFragment extends Fragment {
 
     private void initViews() {
         mAdapter = new TaskAdapter(getActivity(), mList);
+        mAdapter.setListener((position, entity) -> mListener.toEditActivity(position, entity));
         mRv.setAdapter(mAdapter);
         mRv.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
@@ -78,6 +79,7 @@ public class PageFragment extends Fragment {
     }
 
     public interface OnPageFragmentInteractionListener {
+        void toEditActivity(int position, TaskDetailEntity entity);
     }
 
 }

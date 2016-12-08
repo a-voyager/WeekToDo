@@ -1,10 +1,14 @@
 package top.wuhaojie.week.views;
 
 import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -13,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -31,6 +36,7 @@ import top.wuhaojie.week.constant.Constants;
 import top.wuhaojie.week.data.ImageFactory;
 import top.wuhaojie.week.entities.TaskDetailEntity;
 import top.wuhaojie.week.entities.TaskState;
+import top.wuhaojie.week.utils.DensityUtil;
 import top.wuhaojie.week.utils.SnackBarUtils;
 
 public class NewActivity extends AppCompatActivity {
@@ -50,7 +56,56 @@ public class NewActivity extends AppCompatActivity {
     @BindView(R.id.tv_date)
     TextView mTvDate;
     private final List<String> mBgImgs = ImageFactory.createBgImgs();
+    @BindView(R.id.ll_priority)
+    LinearLayout mLlPriority;
+    @BindView(R.id.ll_priority_list)
+    LinearLayout mLlPriorityList;
+    @BindView(R.id.ll_content)
+    LinearLayout mLlContent;
+    @BindView(R.id.content_new)
+    LinearLayout contentNew;
     private String mCurrBgUri;
+
+    @OnClick(R.id.ll_priority)
+    public void onClick() {
+
+//        SnackBarUtils.show(mCl, "选择优先级");
+
+        if (mLlPriorityList.isShown())
+            return;
+
+        ObjectAnimator animator = ObjectAnimator.ofFloat(mLlContent, "translationY", DensityUtil.dip2px(this, 54F));
+        animator.setInterpolator(new FastOutSlowInInterpolator());
+
+        animator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mLlPriorityList.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        AnimatorSet set = new AnimatorSet();
+        set.playSequentially(
+                animator,
+                ObjectAnimator.ofFloat(mLlPriorityList, "alpha", 0.25f, 1, 1)
+        );
+        set.start();
+
+
+    }
 
     private interface IState {
         void initView(Intent intent, Bundle savedInstanceState);
@@ -122,7 +177,7 @@ public class NewActivity extends AppCompatActivity {
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
                 v.removeOnLayoutChangeListener(this);
 
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     int x = (int) (mFab.getWidth() / 2 + mFab.getX());
                     int y = (int) (mFab.getHeight() / 2 + mFab.getY());
                     Animator animator = ViewAnimationUtils.createCircularReveal(decorView, x, y, 0, decorView.getHeight());

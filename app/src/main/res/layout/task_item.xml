@@ -18,20 +18,32 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/sdv_icon"
+        <FrameLayout
             android:layout_width="72dp"
             android:layout_height="72dp"
-            android:layout_gravity="center_vertical"
-            app:placeholderImage="@mipmap/ic_launcher"
-            app:roundAsCircle="true"/>
+            android:layout_gravity="center_vertical">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdv_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:placeholderImage="@mipmap/ic_launcher"
+                app:roundAsCircle="true"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#6FFF"/>
+
+        </FrameLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
-            android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
@@ -45,11 +57,12 @@
             <TextView
                 android:id="@+id/tv_content"
                 style="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textSize="16sp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="6dp"
-                tools:text="正文测试效果正文测试效果正文测试效果"/>
+                android:maxLines="2"
+                android:textSize="16sp"
+                tools:text="正文测试效果正文测试效果正文测测试效果"/>
 
 
         </LinearLayout>

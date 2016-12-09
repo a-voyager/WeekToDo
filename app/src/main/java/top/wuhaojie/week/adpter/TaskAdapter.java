@@ -75,7 +75,7 @@ public class TaskAdapter extends RecyclerView.Adapter {
             String s = content.substring(0, Math.min(length, 28));
             if (length >= 28) s += "...";
             mTvContent.setText(s);
-//            mSdvIcon.setImageURI(entity.getIcon());
+            mSdvIcon.setImageURI(entity.getIcon());
         }
     }
 

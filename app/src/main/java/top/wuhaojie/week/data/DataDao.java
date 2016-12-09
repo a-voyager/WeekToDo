@@ -53,4 +53,10 @@ public class DataDao {
                 .findAllSorted("timeStamp");
     }
 
+
+    public void editTask(TaskDetailEntity oldTask, TaskDetailEntity newTask) {
+        mRealm.executeTransaction(realm -> oldTask.setTaskDetailEntity(newTask));
+    }
+
+
 }

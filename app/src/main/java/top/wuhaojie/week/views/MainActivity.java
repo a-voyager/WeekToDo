@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
     @BindView(R.id.cl_main)
     CoordinatorLayout mClMain;
     private List<MainPageItem> mItems;
+    private int mLastClickedItemPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,13 +98,22 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode != Constants.NEW_ACTIVITY_REQUEST_CODE || resultCode != RESULT_OK) return;
+        if (resultCode != RESULT_OK) return;
         Bundle bundle = data.getExtras();
         TaskDetailEntity task = (TaskDetailEntity) bundle.getSerializable(Constants.INTENT_BUNDLE_NEW_TASK_DETAIL);
         PageFragment fragment = (PageFragment) mItems.get(mVp.getCurrentItem()).getFragment();
-        fragment.insertTask(task);
         DataDao dao = DataDao.getInstance();
-        dao.insertTask(task);
+
+        if (requestCode == Constants.NEW_ACTIVITY_REQUEST_CODE) {
+            fragment.insertTask(task);
+            dao.insertTask(task);
+        } else if (requestCode == Constants.EDIT_ACTIVITY_REQUEST_CODE) {
+            TaskDetailEntity oldTask = fragment.deleteTask(mLastClickedItemPosition);
+            fragment.insertTask(task);
+            dao.editTask(oldTask, task);
+        }
+
+
     }
 
     @Override
@@ -111,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
         Intent intent = new Intent(this, NewActivity.class);
         intent.putExtra(Constants.INTENT_EXTRA_EDIT_TASK_DETAIL_ENTITY, entity.cloneObj());
         intent.putExtra(Constants.INTENT_EXTRA_MODE_OF_NEW_ACT, Constants.MODE_OF_NEW_ACT.MODE_EDIT);
-//        startActivityForResult(intent, Constants.NEW_ACTIVITY_REQUEST_CODE);
-        startActivity(intent);
+        startActivityForResult(intent, Constants.EDIT_ACTIVITY_REQUEST_CODE);
+        mLastClickedItemPosition = position;
     }
 }

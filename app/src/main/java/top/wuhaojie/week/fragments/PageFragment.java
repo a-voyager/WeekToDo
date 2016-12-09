@@ -66,6 +66,25 @@ public class PageFragment extends Fragment {
             mAdapter.notifyItemInserted(mList.size() - 1);
     }
 
+//    public void editTask(int index, TaskDetailEntity task) {
+//        mList.remove(index);
+//        mList.add(task);
+//        TaskDetailEntity taskDetailEntity = mList.get(index);
+//        taskDetailEntity.setTaskDetailEntity(task);
+//        if (mAdapter != null) {
+//            mAdapter.notifyDataSetChanged();
+//        }
+//    }
+
+
+    public TaskDetailEntity deleteTask(int index) {
+        TaskDetailEntity taskDetailEntity = mList.get(index);
+        mList.remove(index);
+        mAdapter.notifyItemRemoved(index);
+        return taskDetailEntity;
+    }
+
+
     private OnPageFragmentInteractionListener mListener;
 
     @Override

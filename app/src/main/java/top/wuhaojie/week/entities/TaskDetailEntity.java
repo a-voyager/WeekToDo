@@ -127,6 +127,16 @@ public class TaskDetailEntity extends RealmObject implements Serializable {
     }
 
 
+    public void setTaskDetailEntity(TaskDetailEntity e) {
+        this.title = e.title;
+        this.content = e.content;
+        this.icon = e.icon;
+        this.timeStamp = e.timeStamp;
+        this.state = e.state;
+        this.priority = e.priority;
+    }
+
+
     @Override
     public String toString() {
         return "TaskDetailEntity{" +

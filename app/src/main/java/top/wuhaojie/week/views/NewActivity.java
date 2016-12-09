@@ -75,6 +75,7 @@ public class NewActivity extends AppCompatActivity {
     private String mCurrBgUri;
     private int mCurrPriority;
     private ChoosePriorityAdapter mChoosePriorityAdapter;
+    private TaskDetailEntity mEntityFromMain;
 
     @OnClick(R.id.ll_priority)
     public void onClick() {
@@ -187,15 +188,15 @@ public class NewActivity extends AppCompatActivity {
                 return false;
             });
 
-            TaskDetailEntity entity = (TaskDetailEntity) intent.getSerializableExtra(Constants.INTENT_EXTRA_EDIT_TASK_DETAIL_ENTITY);
-            intent.putExtra(Constants.INTENT_EXTRA_DAY_OF_WEEK, entity.getDayOfWeek());
-            mEtTitle.setText(entity.getTitle());
-            mEtContent.setText(entity.getContent());
-            loadBgImgWithUri(entity.getIcon());
-            String date = new SimpleDateFormat("yyyy/MM/dd").format(new Date(entity.getTimeStamp()));
+            mEntityFromMain = (TaskDetailEntity) intent.getSerializableExtra(Constants.INTENT_EXTRA_EDIT_TASK_DETAIL_ENTITY);
+            intent.putExtra(Constants.INTENT_EXTRA_DAY_OF_WEEK, mEntityFromMain.getDayOfWeek());
+            mEtTitle.setText(mEntityFromMain.getTitle());
+            mEtContent.setText(mEntityFromMain.getContent());
+            loadBgImgWithUri(mEntityFromMain.getIcon());
+            String date = new SimpleDateFormat("yyyy/MM/dd").format(new Date(mEntityFromMain.getTimeStamp()));
             mTvDate.setText(date);
-            mIvCurrPriority.setImageResource(ImageFactory.createPriorityIcons()[entity.getPriority()]);
-            mChoosePriorityAdapter.setCheckItem(entity.getPriority());
+            mIvCurrPriority.setImageResource(ImageFactory.createPriorityIcons()[mEntityFromMain.getPriority()]);
+            mChoosePriorityAdapter.setCheckItem(mEntityFromMain.getPriority());
         }
     }
 
@@ -307,9 +308,21 @@ public class NewActivity extends AppCompatActivity {
 
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constants.INTENT_BUNDLE_NEW_TASK_DETAIL, taskDetailEntity);
-        intent.putExtras(bundle);
-        setResult(RESULT_OK, intent);
+
+        if (mEntityFromMain == null) {
+            // insert a new task
+            bundle.putSerializable(Constants.INTENT_BUNDLE_NEW_TASK_DETAIL, taskDetailEntity);
+            intent.putExtras(bundle);
+            setResult(RESULT_OK, intent);
+        } else if (!mEntityFromMain.equals(taskDetailEntity)) {
+            // edited & content is changed
+            bundle.putSerializable(Constants.INTENT_BUNDLE_NEW_TASK_DETAIL, taskDetailEntity);
+            intent.putExtras(bundle);
+            setResult(RESULT_OK, intent);
+        } else {
+            setResult(RESULT_CANCELED, intent);
+        }
+
         finish();
 
     }

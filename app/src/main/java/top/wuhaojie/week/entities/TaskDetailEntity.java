@@ -17,6 +17,7 @@ public class TaskDetailEntity extends RealmObject implements Serializable {
     private String icon;
     private long timeStamp;
     private int state;
+    private int priority;
 
     public TaskDetailEntity() {
     }
@@ -73,6 +74,14 @@ public class TaskDetailEntity extends RealmObject implements Serializable {
         this.state = state;
     }
 
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) return false;
@@ -86,19 +95,23 @@ public class TaskDetailEntity extends RealmObject implements Serializable {
                 && o.state == state
                 && (o.icon == icon || o.icon.equals(icon))
                 && o.timeStamp == timeStamp
-                && o.dayOfWeek == dayOfWeek)
+                && o.dayOfWeek == dayOfWeek
+                && o.priority == priority)
             return true;
         return false;
     }
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
-        TaskDetailEntity entity = new TaskDetailEntity(dayOfWeek);
+
+        TaskDetailEntity entity = (TaskDetailEntity) super.clone();
+        entity.dayOfWeek = dayOfWeek;
         entity.title = title;
         entity.content = content;
         entity.icon = icon;
         entity.timeStamp = timeStamp;
         entity.state = state;
+        entity.priority = priority;
         return entity;
     }
 
@@ -109,6 +122,7 @@ public class TaskDetailEntity extends RealmObject implements Serializable {
         entity.icon = icon;
         entity.timeStamp = timeStamp;
         entity.state = state;
+        entity.priority = priority;
         return entity;
     }
 
@@ -119,9 +133,10 @@ public class TaskDetailEntity extends RealmObject implements Serializable {
                 "dayOfWeek=" + dayOfWeek +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", icon=" + icon +
+                ", icon='" + icon + '\'' +
                 ", timeStamp=" + timeStamp +
                 ", state=" + state +
+                ", priority=" + priority +
                 '}';
     }
 }

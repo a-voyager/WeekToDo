@@ -4,6 +4,13 @@
     <color name="colorPrimaryDark">#F23A3A</color>
     <!--<color name="colorPrimaryDark">#C9182B</color>-->
     <color name="colorAccent">#44C662</color>
+
     <color name="fabRippleColor">#3FFF</color>
+
+    <!--Priority Colors-->
     <color name="priority_blue">#20cbff</color>
+    <color name="priority_green">#99CC00</color>
+    <color name="priority_yellow">#FFCC33</color>
+    <color name="priority_red">#FF0033</color>
+
 </resources>

@@ -46,11 +46,12 @@
                 android:layout_marginRight="4dp"
                 android:orientation="horizontal">
 
-                <View
+                <ImageView
+                    android:id="@+id/iv_curr_priority"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/ic_priority_blue_1"/>
+                    android:src="@drawable/ic_priority_1"/>
             </LinearLayout>
 
 
@@ -69,9 +70,13 @@
                 android:orientation="vertical"
                 android:visibility="invisible">
 
-                <Button
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_choose_priority"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"/>
+
 
             </LinearLayout>
 

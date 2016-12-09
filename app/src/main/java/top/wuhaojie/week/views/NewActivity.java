@@ -10,6 +10,8 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -17,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,6 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import top.wuhaojie.week.R;
+import top.wuhaojie.week.adpter.ChoosePriorityAdapter;
 import top.wuhaojie.week.constant.Constants;
 import top.wuhaojie.week.data.ImageFactory;
 import top.wuhaojie.week.entities.TaskDetailEntity;
@@ -64,7 +68,13 @@ public class NewActivity extends AppCompatActivity {
     LinearLayout mLlContent;
     @BindView(R.id.content_new)
     LinearLayout contentNew;
+    @BindView(R.id.rv_choose_priority)
+    RecyclerView mRvChoosePriority;
+    @BindView(R.id.iv_curr_priority)
+    ImageView mIvCurrPriority;
     private String mCurrBgUri;
+    private int mCurrPriority;
+    private ChoosePriorityAdapter mChoosePriorityAdapter;
 
     @OnClick(R.id.ll_priority)
     public void onClick() {
@@ -72,9 +82,14 @@ public class NewActivity extends AppCompatActivity {
 //        SnackBarUtils.show(mCl, "选择优先级");
 
         if (mLlPriorityList.isShown())
-            return;
+            hidePriorityList();
+        else
+            showPriorityList();
 
-        ObjectAnimator animator = ObjectAnimator.ofFloat(mLlContent, "translationY", DensityUtil.dip2px(this, 54F));
+    }
+
+    private void showPriorityList() {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(mLlContent, "translationY", DensityUtil.dip2px(this, 36F));
         animator.setInterpolator(new FastOutSlowInInterpolator());
 
         animator.addListener(new Animator.AnimatorListener() {
@@ -100,11 +115,42 @@ public class NewActivity extends AppCompatActivity {
         AnimatorSet set = new AnimatorSet();
         set.playSequentially(
                 animator,
-                ObjectAnimator.ofFloat(mLlPriorityList, "alpha", 0.25f, 1, 1)
+                ObjectAnimator.ofFloat(mLlPriorityList, "alpha", 0f, 1, 1)
         );
         set.start();
+    }
 
+    private void hidePriorityList() {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(mLlContent, "translationY", 0);
+        ObjectAnimator alpha = ObjectAnimator.ofFloat(mLlPriorityList, "alpha", 1, 1, 0f);
+        alpha.setInterpolator(new FastOutSlowInInterpolator());
 
+        animator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mLlPriorityList.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        AnimatorSet set = new AnimatorSet();
+        set.playSequentially(
+                alpha,
+                animator
+        );
+        set.start();
     }
 
     private interface IState {
@@ -120,6 +166,7 @@ public class NewActivity extends AppCompatActivity {
             loadBgImgWithIndex(i);
             String date = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
             mTvDate.setText(date);
+            mChoosePriorityAdapter.setCheckItem(0);
         }
     }
 
@@ -147,6 +194,8 @@ public class NewActivity extends AppCompatActivity {
             loadBgImgWithUri(entity.getIcon());
             String date = new SimpleDateFormat("yyyy/MM/dd").format(new Date(entity.getTimeStamp()));
             mTvDate.setText(date);
+            mIvCurrPriority.setImageResource(ImageFactory.createPriorityIcons()[entity.getPriority()]);
+            mChoosePriorityAdapter.setCheckItem(entity.getPriority());
         }
     }
 
@@ -159,6 +208,19 @@ public class NewActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        // Priority Choose
+        mRvChoosePriority.setLayoutManager(new GridLayoutManager(this, 4));
+        mChoosePriorityAdapter = new ChoosePriorityAdapter(this);
+        mChoosePriorityAdapter.setOnItemClickListener((v, position) -> {
+            mCurrPriority = position;
+            mIvCurrPriority.setImageResource(ImageFactory.createPriorityIcons()[position]);
+            mChoosePriorityAdapter.setCheckItem(position);
+            hidePriorityList();
+        });
+        mRvChoosePriority.setAdapter(mChoosePriorityAdapter);
+
 
         Intent intent = getIntent();
         int mode = intent.getIntExtra(Constants.INTENT_EXTRA_MODE_OF_NEW_ACT, Constants.MODE_OF_NEW_ACT.MODE_CREATE);
@@ -241,6 +303,7 @@ public class NewActivity extends AppCompatActivity {
         taskDetailEntity.setState(TaskState.DEFAULT);
         taskDetailEntity.setTimeStamp(System.currentTimeMillis());
         taskDetailEntity.setIcon(mCurrBgUri);
+        taskDetailEntity.setPriority(mCurrPriority);
 
         Intent intent = new Intent();
         Bundle bundle = new Bundle();

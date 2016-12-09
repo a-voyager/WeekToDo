@@ -21,8 +21,15 @@ public class ImageFactory {
     }
 
 
+    private static final int[] priorityIcons = new int[]{
+            R.drawable.ic_priority_1,
+            R.drawable.ic_priority_2,
+            R.drawable.ic_priority_3,
+            R.drawable.ic_priority_4
+    };
+
     public static int[] createPriorityIcons() {
-        return new int[]{R.drawable.ic_priority_blue_1};
+        return priorityIcons;
     }
 
 }

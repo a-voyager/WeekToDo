@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -55,6 +57,8 @@ public class TaskAdapter extends RecyclerView.Adapter {
         @BindView(R.id.tv_content)
         TextView mTvContent;
         TaskDetailEntity entity;
+        @BindView(R.id.sdv_icon)
+        SimpleDraweeView mSdvIcon;
 
 
         Holder(View itemView) {
@@ -66,7 +70,12 @@ public class TaskAdapter extends RecyclerView.Adapter {
         void setEntity(TaskDetailEntity entity) {
             this.entity = entity;
             mTvTitle.setText(entity.getTitle());
-            mTvContent.setText(entity.getContent());
+            String content = entity.getContent();
+            int length = content.length();
+            String s = content.substring(0, Math.min(length, 28));
+            if (length >= 28) s += "...";
+            mTvContent.setText(s);
+//            mSdvIcon.setImageURI(entity.getIcon());
         }
     }
 

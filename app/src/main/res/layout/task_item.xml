@@ -19,14 +19,20 @@
         android:orientation="horizontal">
 
         <com.facebook.drawee.view.SimpleDraweeView
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:id="@+id/sdv_icon"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
             android:layout_gravity="center_vertical"
-            app:placeholderImage="@mipmap/ic_launcher"/>
+            app:placeholderImage="@mipmap/ic_launcher"
+            app:roundAsCircle="true"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <TextView
@@ -39,6 +45,7 @@
             <TextView
                 android:id="@+id/tv_content"
                 style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textSize="16sp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="6dp"

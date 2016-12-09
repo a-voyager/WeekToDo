@@ -41,6 +41,7 @@
         android:clickable="true"
         android:src="@drawable/ic_add_white_48dp"
         app:elevation="0dp"
+        app:layout_behavior="top.wuhaojie.week.behaviour.FabHideShowBehaviour"
         app:rippleColor="@color/fabRippleColor"/>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -3,6 +3,7 @@ package top.wuhaojie.week.data;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import top.wuhaojie.week.entities.TaskDetailEntity;
+import top.wuhaojie.week.utils.DateUtils;
 
 /**
  * Created by wuhaojie on 2016/11/30 9:26.
@@ -51,6 +52,14 @@ public class DataDao {
         return mRealm.where(TaskDetailEntity.class)
                 .equalTo("dayOfWeek", dayOfWeek)
                 .findAllSorted("timeStamp");
+    }
+
+
+    public RealmResults<TaskDetailEntity> findAllTaskOfThisWeekFromSunday() {
+        long sundayTimeMillisOfWeek = DateUtils.getFirstSundayTimeMillisOfWeek();
+        return mRealm.where(TaskDetailEntity.class)
+                .greaterThan("timeStamp", sundayTimeMillisOfWeek)
+                .findAll();
     }
 
 

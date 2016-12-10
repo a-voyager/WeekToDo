@@ -68,7 +68,8 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
         // 坑: mVp.getCurrentItem() 某些时候不能获得第一页和最后一页的Index
 
         DataDao dataDao = DataDao.getInstance();
-        RealmResults<TaskDetailEntity> allTask = dataDao.findAllTask();
+//        RealmResults<TaskDetailEntity> allTask = dataDao.findAllTask();
+        RealmResults<TaskDetailEntity> allTask = dataDao.findAllTaskOfThisWeekFromSunday();
         for (TaskDetailEntity t : allTask) {
             int day = t.getDayOfWeek();
             PageFragment fragment = (PageFragment) mItems.get(day - 1).getFragment();

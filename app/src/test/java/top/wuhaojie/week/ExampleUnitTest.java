@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 import top.wuhaojie.week.data.ImageFactory;
+import top.wuhaojie.week.utils.DateUtils;
 
 import static org.junit.Assert.assertEquals;
 
@@ -46,5 +47,13 @@ public class ExampleUnitTest {
         System.out.println(format);
 
     }
-    
+
+
+    @Test
+    public void testDateUtils(){
+        DateUtils.getFirstSundayTimeMillisOfWeek();
+
+    }
+
+
 }

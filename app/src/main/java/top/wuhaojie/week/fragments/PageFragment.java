@@ -54,7 +54,17 @@ public class PageFragment extends Fragment {
 
     private void initViews() {
         mAdapter = new TaskAdapter(getActivity(), mList);
-        mAdapter.setListener((position, entity) -> mListener.toEditActivity(position, entity));
+        mAdapter.setListener(new TaskAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position, TaskDetailEntity entity) {
+                mListener.toEditActivity(position, entity);
+            }
+
+            @Override
+            public void onItemLongClick(int position, TaskDetailEntity entity) {
+                mListener.showContextMenu(position, entity);
+            }
+        });
         mRv.setAdapter(mAdapter);
         mRv.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
@@ -99,6 +109,8 @@ public class PageFragment extends Fragment {
 
     public interface OnPageFragmentInteractionListener {
         void toEditActivity(int position, TaskDetailEntity entity);
+
+        void showContextMenu(int position, TaskDetailEntity entity);
     }
 
 }

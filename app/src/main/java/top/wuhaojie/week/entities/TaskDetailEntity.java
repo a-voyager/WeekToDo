@@ -94,7 +94,7 @@ public class TaskDetailEntity extends RealmObject implements Serializable {
                 && (o.content == content || o.content.equals(content))
                 && o.state == state
                 && (o.icon == icon || o.icon.equals(icon))
-                && o.timeStamp == timeStamp
+//                && o.timeStamp == timeStamp
                 && o.dayOfWeek == dayOfWeek
                 && o.priority == priority)
             return true;

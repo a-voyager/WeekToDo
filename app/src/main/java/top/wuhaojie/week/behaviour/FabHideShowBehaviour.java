@@ -33,8 +33,8 @@ public class FabHideShowBehaviour extends FloatingActionButton.Behavior {
         super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
 //        Log.i(TAG, "onNestedScroll: " + dyConsumed + " : " + dyUnconsumed);
 
-        if (dyConsumed > 0 && child.isShown()) child.hide();
-        else if (dyConsumed < 0 && !child.isShown()) child.show();
+        if ((dyConsumed > 0 || dyUnconsumed > 0) && child.isShown()) child.hide();
+        else if ((dyConsumed < 0 || dyUnconsumed < 0) && !child.isShown()) child.show();
 
     }
 }

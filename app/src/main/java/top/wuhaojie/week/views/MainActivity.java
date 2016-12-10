@@ -2,6 +2,9 @@ package top.wuhaojie.week.views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -9,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.View;
 
 import java.util.Calendar;
 import java.util.List;
@@ -25,6 +29,7 @@ import top.wuhaojie.week.data.PageFactory;
 import top.wuhaojie.week.entities.MainPageItem;
 import top.wuhaojie.week.entities.TaskDetailEntity;
 import top.wuhaojie.week.fragments.PageFragment;
+import top.wuhaojie.week.utils.SnackBarUtils;
 
 public class MainActivity extends AppCompatActivity implements PageFragment.OnPageFragmentInteractionListener {
 
@@ -123,5 +128,60 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
         intent.putExtra(Constants.INTENT_EXTRA_MODE_OF_NEW_ACT, Constants.MODE_OF_NEW_ACT.MODE_EDIT);
         startActivityForResult(intent, Constants.EDIT_ACTIVITY_REQUEST_CODE);
         mLastClickedItemPosition = position;
+    }
+
+
+    @Override
+    public void showContextMenu(final int position, final TaskDetailEntity entity) {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        View view = getLayoutInflater().inflate(R.layout.dl_task_item_menu, mClMain, false);
+        view.findViewById(R.id.ll_action_edit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialog.dismiss();
+                toEditActivity(position, entity);
+            }
+        });
+        view.findViewById(R.id.ll_action_delete).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialog.dismiss();
+                deleteTaskWithDelay(position, entity);
+
+                SnackBarUtils.showAction(mClMain, "即将删除", "撤销", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mHandler.removeMessages(Constants.HANDLER_WHAT_DELETE_TASK);
+                    }
+                });
+
+            }
+        });
+        bottomSheetDialog.setContentView(view);
+        bottomSheetDialog.show();
+    }
+
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            deleteTask(msg.arg1, (TaskDetailEntity) msg.obj);
+        }
+    };
+
+    private void deleteTaskWithDelay(int position, TaskDetailEntity entity) {
+        Message message = new Message();
+        message.what = Constants.HANDLER_WHAT_DELETE_TASK;
+        message.obj = entity;
+        message.arg1 = position;
+        mHandler.sendMessageDelayed(message, 2000);
+    }
+
+    private void deleteTask(int position, TaskDetailEntity entity) {
+        PageFragment fragment = (PageFragment) mItems.get(mVp.getCurrentItem()).getFragment();
+        DataDao dao = DataDao.getInstance();
+        fragment.deleteTask(position);
+        dao.deleteTask(entity);
     }
 }

@@ -59,4 +59,27 @@ public class DataDao {
     }
 
 
+    public void deleteTask(TaskDetailEntity entity) {
+
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                TaskDetailEntity first = realm.where(TaskDetailEntity.class)
+                        .equalTo("dayOfWeek", entity.getDayOfWeek())
+                        .equalTo("title", entity.getTitle())
+                        .equalTo("content", entity.getContent())
+                        .equalTo("icon", entity.getIcon())
+                        .equalTo("priority", entity.getPriority())
+                        .equalTo("state", entity.getState())
+                        .equalTo("timeStamp", entity.getTimeStamp())
+                        .findFirst();
+                if (first != null)
+                    first.deleteFromRealm();
+            }
+        });
+
+
+    }
+
+
 }

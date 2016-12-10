@@ -65,6 +65,10 @@ public class TaskAdapter extends RecyclerView.Adapter {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(v -> mListener.onItemClick(getAdapterPosition(), entity));
+            itemView.setOnLongClickListener(v -> {
+                mListener.onItemLongClick(getAdapterPosition(), entity);
+                return true;
+            });
         }
 
         void setEntity(TaskDetailEntity entity) {
@@ -82,6 +86,8 @@ public class TaskAdapter extends RecyclerView.Adapter {
 
     public interface OnItemClickListener {
         void onItemClick(int position, TaskDetailEntity entity);
+
+        void onItemLongClick(int position, TaskDetailEntity entity);
     }
 
     private OnItemClickListener mListener;

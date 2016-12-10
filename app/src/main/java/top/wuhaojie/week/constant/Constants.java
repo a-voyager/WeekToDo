@@ -14,6 +14,8 @@ public interface Constants {
     String INTENT_EXTRA_EDIT_TASK_DETAIL_ENTITY = "INTENT_EXTRA_EDIT_TASK_DETAIL_ENTITY";
     String INTENT_EXTRA_MODE_OF_NEW_ACT = "INTENT_EXTRA_MODE_OF_NEW_ACT";
 
+    int HANDLER_WHAT_DELETE_TASK = 0;
+
     interface MODE_OF_NEW_ACT {
         int MODE_EDIT = 5;
         int MODE_CREATE = 6;

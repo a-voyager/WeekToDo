@@ -57,3 +57,9 @@
 
 -keep class android.support.v4.app.** { *; }
 -keep interface android.support.v4.app.** { *; }
+
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
+
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}

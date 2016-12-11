@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WeekToDo</string>
+    <string name="app_name">番茄周</string>
     <string name="action_settings">设置</string>
     <string name="title_activity_new">新任务</string>
     <string name="title_activity_settings">设置</string>
@@ -14,6 +14,9 @@
         <item>list</item>
         <item>grid</item>
     </string-array>
+
+
+    <string name="about_text">Copyright © 2015 WuHaojie.\nAll Rights Reserved.</string>
 
 
 </resources>

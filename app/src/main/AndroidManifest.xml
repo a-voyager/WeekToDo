@@ -5,13 +5,13 @@
     <application
         android:name=".App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".views.MainActivity"
-            android:label="周任务"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -28,6 +28,10 @@
         <activity
             android:name=".views.SettingsActivity"
             android:label="@string/title_activity_settings"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".views.AboutActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:title="关于"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="120dp"
+        android:src="@drawable/icon_white"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:text="番茄周  v1.0"
+        android:textColor="#FFF"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="作者:  Voyager"
+        android:textColor="#FFF"/>
+
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:lineSpacingExtra="4dp"
+        android:text="@string/about_text"
+        android:textColor="#33ffffff"/>
+
+    <com.balysv.materialripple.MaterialRippleLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        app:mrl_rippleColor="@color/colorPrimary"
+        app:mrl_rippleOverlay="true">
+
+        <Button
+            android:id="@+id/open_network"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/white_button_bg"
+            android:text="项目开源地址"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="14sp"/>
+    </com.balysv.materialripple.MaterialRippleLayout>
+
+
+</LinearLayout>

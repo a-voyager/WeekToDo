@@ -27,7 +27,9 @@
 
         <Preference
             android:title="关于应用">
-
+            <intent
+                android:targetClass="top.wuhaojie.week.views.AboutActivity"
+                android:targetPackage="top.wuhaojie.week"/>
 
         </Preference>
 

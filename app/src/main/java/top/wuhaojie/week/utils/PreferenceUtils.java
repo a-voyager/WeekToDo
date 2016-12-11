@@ -2,6 +2,7 @@ package top.wuhaojie.week.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 /**
  * Created by wuhaojie on 2016/7/21 13:12.
@@ -17,7 +18,10 @@ public class PreferenceUtils {
 
 
     protected PreferenceUtils(Context context) {
-        sharedPreferences = context.getSharedPreferences(PREFERENCE_FILE_NAME, Context.MODE_PRIVATE);
+//        sharedPreferences = context.getSharedPreferences(PREFERENCE_FILE_NAME, Context.MODE_PRIVATE);
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+
         shareEditor = sharedPreferences.edit();
     }
 

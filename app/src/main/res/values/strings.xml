@@ -1,5 +1,19 @@
 <resources>
     <string name="app_name">WeekToDo</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_new">NewActivity</string>
+    <string name="action_settings">设置</string>
+    <string name="title_activity_new">新任务</string>
+    <string name="title_activity_settings">设置</string>
+
+
+    <string-array name="preference_show_as_list_entries">
+        <item>列表展示</item>
+        <item>网格展示</item>
+    </string-array>
+
+    <string-array name="preference_show_as_list_entries_values">
+        <item>list</item>
+        <item>grid</item>
+    </string-array>
+
+
 </resources>

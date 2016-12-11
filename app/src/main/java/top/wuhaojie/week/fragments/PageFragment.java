@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,7 +19,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import top.wuhaojie.week.R;
 import top.wuhaojie.week.adpter.TaskAdapter;
+import top.wuhaojie.week.constant.Constants;
 import top.wuhaojie.week.entities.TaskDetailEntity;
+import top.wuhaojie.week.utils.PreferenceUtils;
 
 /**
  * Created by wuhaojie on 2016/11/29 21:05.
@@ -66,7 +69,11 @@ public class PageFragment extends Fragment {
             }
         });
         mRv.setAdapter(mAdapter);
-        mRv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        String s = PreferenceUtils.getInstance(getActivity()).getStringParam(Constants.CONFIG_KEY.SHOW_AS_LIST, "list");
+        if (s.equals("list"))
+            mRv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        else
+            mRv.setLayoutManager(new GridLayoutManager(getActivity(), 2));
     }
 
     public void insertTask(TaskDetailEntity task) {

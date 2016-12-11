@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import java.util.Calendar;
@@ -29,6 +30,7 @@ import top.wuhaojie.week.data.PageFactory;
 import top.wuhaojie.week.entities.MainPageItem;
 import top.wuhaojie.week.entities.TaskDetailEntity;
 import top.wuhaojie.week.fragments.PageFragment;
+import top.wuhaojie.week.utils.PreferenceUtils;
 import top.wuhaojie.week.utils.SnackBarUtils;
 
 public class MainActivity extends AppCompatActivity implements PageFragment.OnPageFragmentInteractionListener {
@@ -68,8 +70,11 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
         // 坑: mVp.getCurrentItem() 某些时候不能获得第一页和最后一页的Index
 
         DataDao dataDao = DataDao.getInstance();
-//        RealmResults<TaskDetailEntity> allTask = dataDao.findAllTask();
-        RealmResults<TaskDetailEntity> allTask = dataDao.findAllTaskOfThisWeekFromSunday();
+        RealmResults<TaskDetailEntity> allTask = null;
+        if (PreferenceUtils.getInstance(this).getBooleanParam(Constants.CONFIG_KEY.SHOW_WEEK_TASK))
+            allTask = dataDao.findAllTaskOfThisWeekFromSunday();
+        else
+            allTask = dataDao.findAllTask();
         for (TaskDetailEntity t : allTask) {
             int day = t.getDayOfWeek();
             PageFragment fragment = (PageFragment) mItems.get(day - 1).getFragment();
@@ -100,6 +105,18 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+        }
+
+        return true;
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

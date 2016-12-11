@@ -21,4 +21,10 @@ public interface Constants {
         int MODE_CREATE = 6;
     }
 
+    interface CONFIG_KEY {
+        String SHOW_WEEK_TASK = "SHOW_WEEK_TASK";
+        String SHOW_AS_LIST = "SHOW_AS_LIST";
+    }
+
+
 }

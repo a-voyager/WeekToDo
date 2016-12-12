@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.List;
@@ -29,6 +30,7 @@ import top.wuhaojie.week.data.DataDao;
 import top.wuhaojie.week.data.PageFactory;
 import top.wuhaojie.week.entities.MainPageItem;
 import top.wuhaojie.week.entities.TaskDetailEntity;
+import top.wuhaojie.week.entities.TaskState;
 import top.wuhaojie.week.fragments.PageFragment;
 import top.wuhaojie.week.utils.PreferenceUtils;
 import top.wuhaojie.week.utils.SnackBarUtils;
@@ -153,30 +155,49 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
     public void showContextMenu(final int position, final TaskDetailEntity entity) {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
         View view = getLayoutInflater().inflate(R.layout.dl_task_item_menu, mClMain, false);
-        view.findViewById(R.id.ll_action_edit).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bottomSheetDialog.dismiss();
-                toEditActivity(position, entity);
+
+        TextView tvFlagText = (TextView) view.findViewById(R.id.tv_flag_task);
+
+        if (entity.getState() == TaskState.DEFAULT) {
+            tvFlagText.setText("标记为已完成");
+        } else {
+            tvFlagText.setText("标记为未完成");
+        }
+
+        view.findViewById(R.id.ll_action_flag_task).setOnClickListener(v -> {
+            bottomSheetDialog.dismiss();
+            int newState = TaskState.DEFAULT;
+            if (entity.getState() == TaskState.DEFAULT) {
+                newState = TaskState.FINISHED;
+            } else {
+                newState = TaskState.DEFAULT;
             }
+            switchTaskState(position, entity, newState);
         });
-        view.findViewById(R.id.ll_action_delete).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bottomSheetDialog.dismiss();
-                deleteTaskWithDelay(position, entity);
 
-                SnackBarUtils.showAction(mClMain, "即将删除", "撤销", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mHandler.removeMessages(Constants.HANDLER_WHAT_DELETE_TASK);
-                    }
-                });
 
-            }
+        view.findViewById(R.id.ll_action_edit).setOnClickListener(v -> {
+            bottomSheetDialog.dismiss();
+            toEditActivity(position, entity);
+        });
+        view.findViewById(R.id.ll_action_delete).setOnClickListener(v -> {
+            bottomSheetDialog.dismiss();
+            deleteTaskWithDelay(position, entity);
+
+            SnackBarUtils.showAction(mClMain, "即将删除", "撤销", v1 -> mHandler.removeMessages(Constants.HANDLER_WHAT_DELETE_TASK));
+
         });
         bottomSheetDialog.setContentView(view);
         bottomSheetDialog.show();
+    }
+
+    private void switchTaskState(int position, TaskDetailEntity entity, int newState) {
+        PageFragment fragment = (PageFragment) mItems.get(mVp.getCurrentItem()).getFragment();
+
+        DataDao dao = DataDao.getInstance();
+        dao.switchTaksState(entity, newState);
+
+        fragment.getAdapter().notifyItemChanged(position);
     }
 
 

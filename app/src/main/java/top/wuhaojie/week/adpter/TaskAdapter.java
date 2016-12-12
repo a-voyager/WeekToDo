@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -17,6 +18,7 @@ import butterknife.ButterKnife;
 import top.wuhaojie.week.R;
 import top.wuhaojie.week.data.ImageFactory;
 import top.wuhaojie.week.entities.TaskDetailEntity;
+import top.wuhaojie.week.entities.TaskState;
 
 /**
  * Created by wuhaojie on 2016/11/29 21:35.
@@ -74,6 +76,8 @@ public class TaskAdapter extends RecyclerView.Adapter {
         SimpleDraweeView mSdvIcon;
         @BindView(R.id.iv_curr_priority)
         ImageView mIvCurrPriority;
+        @BindView(R.id.ll_task_finished_mask)
+        LinearLayout mLlTaskFinishedMask;
 
 
         Holder(View itemView) {
@@ -88,13 +92,21 @@ public class TaskAdapter extends RecyclerView.Adapter {
 
         void setEntity(TaskDetailEntity entity) {
             this.entity = entity;
+
+            // Title
             mTvTitle.setText(entity.getTitle());
+
+            // Content
             String content = entity.getContent();
             int length = content.length();
             String s = content.substring(0, Math.min(length, 28));
             if (length >= 28) s += "...";
             mTvContent.setText(s);
+
+            // ICON
             mSdvIcon.setImageURI(entity.getIcon());
+
+            // Priority
             if (showPriority) {
                 if (!mIvCurrPriority.isShown())
                     mIvCurrPriority.setVisibility(View.VISIBLE);
@@ -104,6 +116,15 @@ public class TaskAdapter extends RecyclerView.Adapter {
                 if (mIvCurrPriority.isShown())
                     mIvCurrPriority.setVisibility(View.INVISIBLE);
             }
+
+            // IsFinished
+            int state = entity.getState();
+            if (state == TaskState.FINISHED)
+                mLlTaskFinishedMask.setVisibility(View.VISIBLE);
+            else
+                mLlTaskFinishedMask.setVisibility(View.INVISIBLE);
+
+
         }
     }
 

@@ -8,6 +8,31 @@
 
 
     <LinearLayout
+        android:id="@+id/ll_action_flag_task"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_action_flag"/>
+
+        <TextView
+            android:id="@+id/tv_flag_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="12dp"
+            android:text="标记为已完成"
+            android:textSize="18sp"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/ll_action_edit"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -27,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="12dp"
-            android:text="编辑"
+            android:text="编辑任务"
             android:textSize="18sp"/>
     </LinearLayout>
 
@@ -51,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="12dp"
-            android:text="删除"
+            android:text="删除任务"
             android:textSize="18sp"/>
     </LinearLayout>
 

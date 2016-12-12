@@ -162,6 +162,10 @@ public class NewActivity extends AppCompatActivity {
 
         @Override
         public void initView(Intent intent, Bundle savedInstanceState) {
+
+            if (getSupportActionBar() != null)
+                getSupportActionBar().setTitle("添加任务");
+
             mEtContent.requestFocus();
             int i = new Random(System.currentTimeMillis()).nextInt(mBgImgs.size());
             loadBgImgWithIndex(i);
@@ -175,6 +179,9 @@ public class NewActivity extends AppCompatActivity {
 
         @Override
         public void initView(Intent intent, Bundle savedInstanceState) {
+
+            if (getSupportActionBar() != null)
+                getSupportActionBar().setTitle("编辑任务");
 
             mEtTitle.setFocusable(false);
             mEtTitle.setOnTouchListener((v, event) -> {
@@ -190,6 +197,7 @@ public class NewActivity extends AppCompatActivity {
 
             mEntityFromMain = (TaskDetailEntity) intent.getSerializableExtra(Constants.INTENT_EXTRA_EDIT_TASK_DETAIL_ENTITY);
             intent.putExtra(Constants.INTENT_EXTRA_DAY_OF_WEEK, mEntityFromMain.getDayOfWeek());
+            mCurrPriority = mEntityFromMain.getPriority();
             mEtTitle.setText(mEntityFromMain.getTitle());
             mEtContent.setText(mEntityFromMain.getContent());
             loadBgImgWithUri(mEntityFromMain.getIcon());
@@ -301,6 +309,7 @@ public class NewActivity extends AppCompatActivity {
         TaskDetailEntity taskDetailEntity = new TaskDetailEntity(dayOfWeek);
         taskDetailEntity.setTitle(title);
         taskDetailEntity.setContent(content);
+        // 不论编辑或者新建 都将状态设置成未完成状态
         taskDetailEntity.setState(TaskState.DEFAULT);
         taskDetailEntity.setTimeStamp(System.currentTimeMillis());
         taskDetailEntity.setIcon(mCurrBgUri);

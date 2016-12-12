@@ -75,9 +75,24 @@
         android:id="@+id/iv_curr_priority"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:src="@drawable/ic_priority_1"
         android:visibility="invisible"/>
+
+    <LinearLayout
+        android:id="@+id/ll_task_finished_mask"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#CFFF"
+        android:orientation="horizontal"
+        android:visibility="invisible">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_finished"/>
+
+    </LinearLayout>
 
 
 </android.support.v7.widget.CardView>

@@ -34,6 +34,11 @@ public class PageFragment extends Fragment {
     RecyclerView mRv;
 
     private List<TaskDetailEntity> mList = new ArrayList<>();
+
+    public TaskAdapter getAdapter() {
+        return mAdapter;
+    }
+
     private TaskAdapter mAdapter;
 
     public PageFragment() {

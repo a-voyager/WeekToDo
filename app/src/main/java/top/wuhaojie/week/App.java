@@ -33,6 +33,7 @@ public class App extends Application {
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(context);
         strategy.setUploadProcess(processName == null || processName.equals(packageName));
 //        CrashReport.initCrashReport(getApplicationContext(), "684db223b4", true, strategy);
+        strategy.setAppChannel("Test");
         Bugly.init(getApplicationContext(), "684db223b4", true, strategy);
 
 

@@ -9,6 +9,7 @@
             android:summary="任务列表显示所有任务"
             android:title="仅显示本周任务"/>
 
+
         <ListPreference
             android:defaultValue="list"
             android:entries="@array/preference_show_as_list_entries"
@@ -17,8 +18,13 @@
             android:negativeButtonText="@null"
             android:positiveButtonText="@null"
             android:summary="列表形式展示任务列表"
-            android:title="布局方式"
-            />
+            android:title="布局方式"/>
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="SHOW_PRIORITY"
+            android:summary="在任务卡片中将显示优先级"
+            android:title="显示优先级"/>
 
     </PreferenceCategory>
 

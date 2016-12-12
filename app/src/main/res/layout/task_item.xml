@@ -52,6 +52,7 @@
                 style="@style/Base.TextAppearance.AppCompat.Headline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
                 tools:text="标题测试效果"/>
 
             <TextView
@@ -69,6 +70,14 @@
 
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_curr_priority"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_gravity="right"
+        android:src="@drawable/ic_priority_1"
+        android:visibility="invisible"/>
 
 
 </android.support.v7.widget.CardView>

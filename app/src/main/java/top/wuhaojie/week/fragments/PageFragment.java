@@ -57,6 +57,8 @@ public class PageFragment extends Fragment {
 
     private void initViews() {
         mAdapter = new TaskAdapter(getActivity(), mList);
+        boolean showPriority = PreferenceUtils.getInstance(getActivity()).getBooleanParam(Constants.CONFIG_KEY.SHOW_PRIORITY, true);
+        mAdapter.setShowPriority(showPriority);
         mAdapter.setListener(new TaskAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position, TaskDetailEntity entity) {

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -14,6 +15,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import top.wuhaojie.week.R;
+import top.wuhaojie.week.data.ImageFactory;
 import top.wuhaojie.week.entities.TaskDetailEntity;
 
 /**
@@ -25,10 +27,21 @@ public class TaskAdapter extends RecyclerView.Adapter {
 
     private Context mContext;
     private List<TaskDetailEntity> mList;
+    private boolean showPriority = true;
+    private final int[] mPriorityIcons;
+
+    public boolean isShowPriority() {
+        return showPriority;
+    }
+
+    public void setShowPriority(boolean showPriority) {
+        this.showPriority = showPriority;
+    }
 
     public TaskAdapter(Context context, List<TaskDetailEntity> list) {
         this.mContext = context;
         this.mList = list;
+        mPriorityIcons = ImageFactory.createPriorityIcons();
     }
 
     @Override
@@ -59,6 +72,8 @@ public class TaskAdapter extends RecyclerView.Adapter {
         TaskDetailEntity entity;
         @BindView(R.id.sdv_icon)
         SimpleDraweeView mSdvIcon;
+        @BindView(R.id.iv_curr_priority)
+        ImageView mIvCurrPriority;
 
 
         Holder(View itemView) {
@@ -80,6 +95,15 @@ public class TaskAdapter extends RecyclerView.Adapter {
             if (length >= 28) s += "...";
             mTvContent.setText(s);
             mSdvIcon.setImageURI(entity.getIcon());
+            if (showPriority) {
+                if (!mIvCurrPriority.isShown())
+                    mIvCurrPriority.setVisibility(View.VISIBLE);
+                int priority = entity.getPriority();
+                mIvCurrPriority.setImageResource(mPriorityIcons[priority]);
+            } else {
+                if (mIvCurrPriority.isShown())
+                    mIvCurrPriority.setVisibility(View.INVISIBLE);
+            }
         }
     }
 

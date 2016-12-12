@@ -1,7 +1,6 @@
 package top.wuhaojie.week.fragments;
 
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
 import top.wuhaojie.week.R;
@@ -24,17 +23,24 @@ public class SettingsFragment extends PreferenceFragment {
             return true;
         });
 
-        findPreference(Constants.CONFIG_KEY.SHOW_AS_LIST).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                String s = (String) newValue;
-                if (s.equals("list")) {
-                    preference.setSummary("列表形式展示任务列表");
-                } else {
-                    preference.setSummary("网格形式展示任务列表");
-                }
-                return true;
+        findPreference(Constants.CONFIG_KEY.SHOW_AS_LIST).setOnPreferenceChangeListener((preference, newValue) -> {
+            String s = (String) newValue;
+            if (s.equals("list")) {
+                preference.setSummary("列表形式展示任务列表");
+            } else {
+                preference.setSummary("网格形式展示任务列表");
             }
+            return true;
+        });
+
+
+        findPreference(Constants.CONFIG_KEY.SHOW_PRIORITY).setOnPreferenceChangeListener((preference, newValue) -> {
+            boolean b = (boolean) newValue;
+            if (b)
+                preference.setSummary("在任务卡片中将显示优先级");
+            else
+                preference.setSummary("在任务卡片中将不会显示优先级");
+            return true;
         });
 
     }

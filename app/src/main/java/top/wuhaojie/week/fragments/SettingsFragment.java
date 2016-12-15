@@ -1,7 +1,9 @@
 package top.wuhaojie.week.fragments;
 
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.support.v7.app.AppCompatDelegate;
 
 import top.wuhaojie.week.R;
 import top.wuhaojie.week.constant.Constants;
@@ -41,6 +43,20 @@ public class SettingsFragment extends PreferenceFragment {
             else
                 preference.setSummary("在任务卡片中将不会显示优先级");
             return true;
+        });
+
+
+        findPreference(Constants.CONFIG_KEY.NIGHT_MODE).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                boolean b = (boolean) newValue;
+                if (b) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+                return true;
+            }
         });
 
     }

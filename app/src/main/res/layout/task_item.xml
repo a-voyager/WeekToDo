@@ -10,13 +10,13 @@
     android:layout_marginRight="6dp"
     android:layout_marginTop="4dp"
     android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground"
-    app:contentPadding="12dp">
+    android:foreground="?android:attr/selectableItemBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="12dp">
 
         <FrameLayout
             android:layout_width="72dp"
@@ -30,10 +30,6 @@
                 app:placeholderImage="@mipmap/ic_launcher"
                 app:roundAsCircle="true"/>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#6FFF"/>
 
         </FrameLayout>
 
@@ -76,6 +72,7 @@
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_gravity="end"
+        android:layout_margin="12dp"
         android:src="@drawable/ic_priority_1"
         android:visibility="invisible"/>
 
@@ -83,7 +80,7 @@
         android:id="@+id/ll_task_finished_mask"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#CFFF"
+        android:background="@color/iv_mask_task_item"
         android:orientation="horizontal"
         android:visibility="invisible">
 

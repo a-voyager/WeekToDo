@@ -25,6 +25,7 @@ public interface Constants {
         String SHOW_WEEK_TASK = "SHOW_WEEK_TASK";
         String SHOW_AS_LIST = "SHOW_AS_LIST";
         String SHOW_PRIORITY = "SHOW_PRIORITY";
+        String NIGHT_MODE = "NIGHT_MODE";
     }
 
 

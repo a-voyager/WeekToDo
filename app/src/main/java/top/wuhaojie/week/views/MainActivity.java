@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -82,6 +83,12 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
             PageFragment fragment = (PageFragment) mItems.get(day - 1).getFragment();
             fragment.insertTask(t);
         }
+
+        boolean isNight = PreferenceUtils.getInstance(this).getBooleanParam(Constants.CONFIG_KEY.NIGHT_MODE, false);
+        if (isNight)
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        else
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
 
     }

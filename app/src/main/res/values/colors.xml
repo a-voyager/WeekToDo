@@ -12,5 +12,8 @@
     <color name="priority_green">#99CC00</color>
     <color name="priority_yellow">#FFCC33</color>
     <color name="priority_red">#FF0033</color>
+    <color name="iv_mask_new_act">#0000</color>
+    <color name="iv_mask_task_item">#CFFF</color>
+    <color name="color_mask_icon_task_item">#6FFF</color>
 
 </resources>

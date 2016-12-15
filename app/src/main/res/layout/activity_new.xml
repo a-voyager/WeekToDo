@@ -64,6 +64,7 @@
         android:layout_gravity="bottom"
         android:layout_margin="@dimen/fab_margin"
         android:clickable="true"
+        app:layout_behavior="top.wuhaojie.week.behaviour.FabHideShowBehaviour"
         android:src="@drawable/ic_check_white_48dp"
         app:elevation="0dp"
         app:rippleColor="@color/fabRippleColor"/>

@@ -183,6 +183,8 @@ public class NewActivity extends AppCompatActivity {
             if (getSupportActionBar() != null)
                 getSupportActionBar().setTitle("编辑任务");
 
+            mFab.hide();
+
             mEtTitle.setFocusable(false);
             mEtTitle.setOnTouchListener((v, event) -> {
                 mEtTitle.setFocusableInTouchMode(true);

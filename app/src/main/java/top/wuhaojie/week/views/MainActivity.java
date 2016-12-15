@@ -223,4 +223,9 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
         fragment.deleteTask(position);
         dao.deleteTask(entity);
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+    }
 }

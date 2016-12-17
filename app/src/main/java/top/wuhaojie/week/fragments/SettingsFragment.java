@@ -51,10 +51,12 @@ public class SettingsFragment extends PreferenceFragment {
             SettingsActivity activity = (SettingsActivity) getActivity();
             if (b) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                activity.getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                activity.animateSwitchNightMode(true);
+//                activity.getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                activity.getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//                activity.getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                activity.animateSwitchNightMode(false);
             }
             return true;
         });

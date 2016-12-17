@@ -1,4 +1,4 @@
-# 番茄周 v1.0.3
+# 番茄周 v1.0.4
 ![image](https://github.com/a-voyager/WeekToDo/raw/master/imgs/icon.png "效果图")
 
 [下载 APK 体验][1]
@@ -21,6 +21,11 @@
 | ButterKnife   |  视图注解     |
 | Fresco        | 图像加载      |
 |Material-Ripple| 水波纹特效    |
+
+# 更新日志
+### v1.0.4
+ - 添加夜间模式
+
 
 # License
     The MIT License (MIT)

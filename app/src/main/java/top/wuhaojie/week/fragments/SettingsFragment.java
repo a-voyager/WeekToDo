@@ -1,12 +1,12 @@
 package top.wuhaojie.week.fragments;
 
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatDelegate;
 
 import top.wuhaojie.week.R;
 import top.wuhaojie.week.constant.Constants;
+import top.wuhaojie.week.views.SettingsActivity;
 
 /**
  * Created by wuhaojie on 2016/12/11 14:05.
@@ -46,17 +46,17 @@ public class SettingsFragment extends PreferenceFragment {
         });
 
 
-        findPreference(Constants.CONFIG_KEY.NIGHT_MODE).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                boolean b = (boolean) newValue;
-                if (b) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                }
-                return true;
+        findPreference(Constants.CONFIG_KEY.NIGHT_MODE).setOnPreferenceChangeListener((preference, newValue) -> {
+            boolean b = (boolean) newValue;
+            SettingsActivity activity = (SettingsActivity) getActivity();
+            if (b) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                activity.getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                activity.getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
+            return true;
         });
 
     }

@@ -66,8 +66,15 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
         mTab.setupWithViewPager(mVp);
         mVp.setAdapter(adapter);
 
+
+        int currIndex;
         int dayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-        mVp.setCurrentItem(dayOfWeek - 1, true);
+        currIndex = dayOfWeek - 1;
+        Intent intent = getIntent();
+        if (intent != null) {
+            currIndex = intent.getIntExtra(Constants.INTENT_EXTRA_SWITCH_TO_INDEX, currIndex);
+        }
+        mVp.setCurrentItem(currIndex, true);
 
 
         // 坑: mVp.getCurrentItem() 某些时候不能获得第一页和最后一页的Index
@@ -123,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
         switch (item.getItemId()) {
             case R.id.action_settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
+                intent.putExtra(Constants.INTENT_EXTRA_SWITCH_TO_INDEX, mVp.getCurrentItem());
                 startActivity(intent);
                 finish();
                 break;

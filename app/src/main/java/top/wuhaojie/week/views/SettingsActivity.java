@@ -11,10 +11,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.Calendar;
+
 import top.wuhaojie.week.R;
+import top.wuhaojie.week.constant.Constants;
 import top.wuhaojie.week.fragments.SettingsFragment;
 
 public class SettingsActivity extends AppCompatActivity {
+
+    private int mCurrIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +34,11 @@ public class SettingsActivity extends AppCompatActivity {
         fragmentManager.beginTransaction()
                 .replace(R.id.fl_settings, settingsFragment)
                 .commit();
+        Intent intent = getIntent();
+        mCurrIndex = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1;
+        if (intent != null) {
+            mCurrIndex = intent.getIntExtra(Constants.INTENT_EXTRA_SWITCH_TO_INDEX, mCurrIndex);
+        }
 
     }
 
@@ -45,6 +55,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void toMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(Constants.INTENT_EXTRA_SWITCH_TO_INDEX, mCurrIndex);
         startActivity(intent);
     }
 

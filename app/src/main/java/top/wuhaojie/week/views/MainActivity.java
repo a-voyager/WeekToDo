@@ -84,11 +84,15 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
             fragment.insertTask(t);
         }
 
-        boolean isNight = PreferenceUtils.getInstance(this).getBooleanParam(Constants.CONFIG_KEY.NIGHT_MODE, false);
-        if (isNight)
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        else
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        if (PreferenceUtils.getInstance(this).getBooleanParam(Constants.CONFIG_KEY.AUTO_SWITCH_NIGHT_MODE, true)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+        } else {
+            boolean isNight = PreferenceUtils.getInstance(this).getBooleanParam(Constants.CONFIG_KEY.NIGHT_MODE, false);
+            if (isNight)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            else
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
 
 
     }

@@ -26,6 +26,7 @@ public interface Constants {
         String SHOW_AS_LIST = "SHOW_AS_LIST";
         String SHOW_PRIORITY = "SHOW_PRIORITY";
         String NIGHT_MODE = "NIGHT_MODE";
+        String AUTO_SWITCH_NIGHT_MODE = "AUTO_SWITCH_NIGHT_MODE";
     }
 
 

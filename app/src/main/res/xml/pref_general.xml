@@ -31,6 +31,12 @@
     <PreferenceCategory
         android:title="其他">
 
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="AUTO_SWITCH_NIGHT_MODE"
+            android:title="自动开关夜间模式"
+            />
+
         <SwitchPreference
             android:defaultValue="false"
             android:key="NIGHT_MODE"

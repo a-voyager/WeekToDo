@@ -61,7 +61,26 @@ public class SettingsActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public void animateSwitchNightMode(boolean toNight) {
+    public void switchNightMode(boolean toNight, boolean auto) {
+        if (auto) {
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+            return;
+        }
+        if (toNight)
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        else
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+    }
+
+
+    public void switchNightMode(boolean toNight) {
+        switchNightMode(toNight, false);
+    }
+
+
+    private void animateSwitchNightMode(boolean toNight, boolean auto) {
+
+
         View decorView = getWindow().getDecorView();
         ObjectAnimator animator = ObjectAnimator.ofFloat(decorView, "alpha", 1, 0);
         animator.setDuration(600);
@@ -75,10 +94,16 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 animation.removeAllListeners();
+                if (auto) {
+                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+                    return;
+                }
                 if (toNight)
                     getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 else
                     getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+
             }
 
             @Override

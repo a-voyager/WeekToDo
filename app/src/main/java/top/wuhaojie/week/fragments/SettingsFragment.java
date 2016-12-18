@@ -1,11 +1,13 @@
 package top.wuhaojie.week.fragments;
 
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatDelegate;
 
 import top.wuhaojie.week.R;
 import top.wuhaojie.week.constant.Constants;
+import top.wuhaojie.week.utils.PreferenceUtils;
 import top.wuhaojie.week.views.SettingsActivity;
 
 /**
@@ -18,6 +20,17 @@ public class SettingsFragment extends PreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_general);
+
+
+        SettingsActivity activity = (SettingsActivity) getActivity();
+
+        boolean autoNight = PreferenceUtils.getInstance(getActivity()).getBooleanParam(Constants.CONFIG_KEY.AUTO_SWITCH_NIGHT_MODE, true);
+        if (autoNight) {
+            findPreference(Constants.CONFIG_KEY.NIGHT_MODE).setEnabled(false);
+        } else {
+            findPreference(Constants.CONFIG_KEY.NIGHT_MODE).setEnabled(true);
+        }
+
 
         findPreference(Constants.CONFIG_KEY.SHOW_WEEK_TASK).setOnPreferenceChangeListener((preference1, newValue) -> {
             boolean b = (boolean) newValue;
@@ -46,17 +59,37 @@ public class SettingsFragment extends PreferenceFragment {
         });
 
 
+        findPreference(Constants.CONFIG_KEY.AUTO_SWITCH_NIGHT_MODE).setOnPreferenceChangeListener((preference, newValue) -> {
+            boolean b = (boolean) newValue;
+            Preference nightPreference = findPreference(Constants.CONFIG_KEY.NIGHT_MODE);
+            if (b) {
+                nightPreference.setEnabled(false);
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+                activity.switchNightMode(false, true);
+
+            } else {
+                nightPreference.setEnabled(true);
+                boolean toNight = PreferenceUtils.getInstance(getActivity()).getBooleanParam(Constants.CONFIG_KEY.NIGHT_MODE, false);
+                if (toNight)
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                else
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+                activity.switchNightMode(toNight);
+            }
+            return true;
+        });
+
         findPreference(Constants.CONFIG_KEY.NIGHT_MODE).setOnPreferenceChangeListener((preference, newValue) -> {
             boolean b = (boolean) newValue;
-            SettingsActivity activity = (SettingsActivity) getActivity();
             if (b) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                activity.animateSwitchNightMode(true);
+                activity.switchNightMode(true);
 //                activity.getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 //                activity.getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                activity.animateSwitchNightMode(false);
+                activity.switchNightMode(false);
             }
             return true;
         });

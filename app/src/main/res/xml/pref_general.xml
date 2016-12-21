@@ -6,7 +6,7 @@
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="SHOW_WEEK_TASK"
-            android:summary="任务列表显示所有任务"
+            android:summary="主界面任务列表显示所有任务"
             android:title="仅显示本周任务"/>
 
 

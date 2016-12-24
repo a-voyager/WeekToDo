@@ -127,4 +127,12 @@ public class PageFragment extends Fragment {
         void showContextMenu(int position, TaskDetailEntity entity);
     }
 
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mListener = null;
+        mAdapter = null;
+        mRv = null;
+    }
 }

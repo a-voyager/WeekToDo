@@ -104,6 +104,12 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mItems = null;
+    }
+
     @OnClick(R.id.fab)
     public void onClick() {
 //        DataDao dao = DataDao.getInstance();

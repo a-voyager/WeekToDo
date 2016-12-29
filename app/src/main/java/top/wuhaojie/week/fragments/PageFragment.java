@@ -51,28 +51,37 @@ public class PageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
 
-        View view = inflater.inflate(R.layout.page_fragment, container, false);
+        return inflater.inflate(R.layout.page_fragment, container, false);
+    }
+
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         ButterKnife.bind(this, view);
 
         initViews();
-
-        return view;
     }
-
 
     private void initViews() {
         mAdapter = new TaskAdapter(getActivity(), mList);
         boolean showPriority = PreferenceUtils.getInstance(getActivity()).getBooleanParam(Constants.CONFIG_KEY.SHOW_PRIORITY, true);
         mAdapter.setShowPriority(showPriority);
+        if (mListener == null && getActivity() instanceof OnPageFragmentInteractionListener) {
+            mListener = (OnPageFragmentInteractionListener) getActivity();
+        }
         mAdapter.setListener(new TaskAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position, TaskDetailEntity entity) {
-                mListener.toEditActivity(position, entity);
+                if (mListener != null)
+                    mListener.toEditActivity(position, entity);
             }
 
             @Override
             public void onItemLongClick(int position, TaskDetailEntity entity) {
-                mListener.showContextMenu(position, entity);
+                if (mListener != null)
+                    mListener.showContextMenu(position, entity);
             }
         });
         mRv.setAdapter(mAdapter);
@@ -89,16 +98,6 @@ public class PageFragment extends Fragment {
         if (mAdapter != null)
             mAdapter.notifyItemInserted(mList.size() - 1);
     }
-
-//    public void editTask(int index, TaskDetailEntity task) {
-//        mList.remove(index);
-//        mList.add(task);
-//        TaskDetailEntity taskDetailEntity = mList.get(index);
-//        taskDetailEntity.setTaskDetailEntity(task);
-//        if (mAdapter != null) {
-//            mAdapter.notifyDataSetChanged();
-//        }
-//    }
 
 
     public TaskDetailEntity deleteTask(int index) {
@@ -119,6 +118,10 @@ public class PageFragment extends Fragment {
         } else {
             Log.e(TAG, "context is not instanceof OnPageFragmentInteractionListener");
         }
+    }
+
+    public void clearTasks() {
+        mList.clear();
     }
 
     public interface OnPageFragmentInteractionListener {

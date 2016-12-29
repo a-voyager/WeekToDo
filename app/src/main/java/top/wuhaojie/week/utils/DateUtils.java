@@ -8,6 +8,10 @@ import java.util.Calendar;
 
 public class DateUtils {
 
+
+    private DateUtils() {
+    }
+
     public static long getFirstSundayTimeMillisOfWeek() {
         Calendar calendar = Calendar.getInstance();
         int firstDayOfWeek = calendar.getFirstDayOfWeek();
@@ -19,5 +23,12 @@ public class DateUtils {
 
         return System.currentTimeMillis() - millisFromSunday;
     }
+
+    public static int calNextDayDayOfWeek(int currDayOfWeek) {
+        int i = (currDayOfWeek + 1) % 8;
+        if (i == 0) i = 1;
+        return i;
+    }
+
 
 }

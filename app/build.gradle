@@ -10,8 +10,8 @@ android {
         applicationId "top.wuhaojie.week"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 4
-        versionName "1.0"
+        versionCode 6
+        versionName "1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 //        ndk {

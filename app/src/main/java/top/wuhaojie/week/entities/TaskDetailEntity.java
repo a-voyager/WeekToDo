@@ -134,6 +134,7 @@ public class TaskDetailEntity extends RealmObject implements Serializable {
         this.timeStamp = e.timeStamp;
         this.state = e.state;
         this.priority = e.priority;
+        this.dayOfWeek = e.dayOfWeek;
     }
 
 

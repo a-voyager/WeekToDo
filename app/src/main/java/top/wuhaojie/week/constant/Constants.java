@@ -16,6 +16,7 @@ public interface Constants {
     String INTENT_EXTRA_SWITCH_TO_INDEX = "INTENT_EXTRA_SWITCH_TO_INDEX";
 
     int HANDLER_WHAT_DELETE_TASK = 0;
+    int HANDLER_WHAT_PUT_OFF_TASK = 1;
 
     interface MODE_OF_NEW_ACT {
         int MODE_EDIT = 5;

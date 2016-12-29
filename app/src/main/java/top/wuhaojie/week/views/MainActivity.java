@@ -33,6 +33,7 @@ import top.wuhaojie.week.entities.MainPageItem;
 import top.wuhaojie.week.entities.TaskDetailEntity;
 import top.wuhaojie.week.entities.TaskState;
 import top.wuhaojie.week.fragments.PageFragment;
+import top.wuhaojie.week.utils.DateUtils;
 import top.wuhaojie.week.utils.PreferenceUtils;
 import top.wuhaojie.week.utils.SnackBarUtils;
 
@@ -79,6 +80,11 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
 
         // 坑: mVp.getCurrentItem() 某些时候不能获得第一页和最后一页的Index
 
+        for (int i = 0; i < 7; i++) {
+            ((PageFragment) mItems.get(i).getFragment()).clearTasks();
+        }
+
+
         DataDao dataDao = DataDao.getInstance();
         RealmResults<TaskDetailEntity> allTask = null;
         if (PreferenceUtils.getInstance(this).getBooleanParam(Constants.CONFIG_KEY.SHOW_WEEK_TASK))
@@ -105,9 +111,17 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         mItems = null;
+        DataDao.getInstance().close();
+        mHandler = null;
     }
 
     @OnClick(R.id.fab)
@@ -212,6 +226,15 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
             SnackBarUtils.showAction(mClMain, "即将删除", "撤销", v1 -> mHandler.removeMessages(Constants.HANDLER_WHAT_DELETE_TASK));
 
         });
+
+        view.findViewById(R.id.ll_action_put_off).setOnClickListener(v -> {
+            bottomSheetDialog.dismiss();
+            putOffTaskOneDayWithDelay(position, entity);
+
+            SnackBarUtils.showAction(mClMain, "该任务即将推延一天", "撤销", v12 -> mHandler.removeMessages(Constants.HANDLER_WHAT_PUT_OFF_TASK));
+        });
+
+
         bottomSheetDialog.setContentView(view);
         bottomSheetDialog.show();
     }
@@ -225,14 +248,46 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
         fragment.getAdapter().notifyItemChanged(position);
     }
 
-
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            deleteTask(msg.arg1, (TaskDetailEntity) msg.obj);
+
+            switch (msg.what) {
+                case Constants.HANDLER_WHAT_DELETE_TASK:
+                    deleteTask(msg.arg1, (TaskDetailEntity) msg.obj);
+                    break;
+                case Constants.HANDLER_WHAT_PUT_OFF_TASK:
+                    putOffTaskOneDay(msg.arg1, (TaskDetailEntity) msg.obj);
+                    break;
+            }
+
+
         }
     };
+
+
+    private void putOffTaskOneDayWithDelay(int position, TaskDetailEntity entity) {
+        Message message = new Message();
+        message.what = Constants.HANDLER_WHAT_PUT_OFF_TASK;
+        message.obj = entity;
+        message.arg1 = position;
+        mHandler.sendMessageDelayed(message, 2000);
+
+    }
+
+    private void putOffTaskOneDay(int position, TaskDetailEntity entity) {
+
+        PageFragment fragment = (PageFragment) mItems.get(mVp.getCurrentItem()).getFragment();
+        TaskDetailEntity oldEntity = fragment.deleteTask(position);
+        TaskDetailEntity newEntity = oldEntity.cloneObj();
+        newEntity.setDayOfWeek(DateUtils.calNextDayDayOfWeek(oldEntity.getDayOfWeek()));
+        ((PageFragment) mItems.get(newEntity.getDayOfWeek() - 1).getFragment()).insertTask(newEntity);
+        DataDao dao = DataDao.getInstance();
+        dao.insertTask(newEntity);
+        dao.deleteTask(oldEntity);
+
+    }
 
     private void deleteTaskWithDelay(int position, TaskDetailEntity entity) {
         Message message = new Message();

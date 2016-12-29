@@ -25,14 +25,14 @@ public class ExampleUnitTest {
     }
 
     @Test
-    public void testList(){
+    public void testList() {
         List<String> bgImgs = ImageFactory.createBgImgs();
         System.out.println(bgImgs);
     }
 
 
     @Test
-    public void testRandom(){
+    public void testRandom() {
 
         int i = new Random(System.currentTimeMillis()).nextInt(8);
         System.out.println(i);
@@ -40,7 +40,7 @@ public class ExampleUnitTest {
 
 
     @Test
-    public void testDate(){
+    public void testDate() {
 
         String s = DateFormat.getInstance().format(new Date());
         String format = new SimpleDateFormat("yyyy/mm/dd").format(new Date());
@@ -50,9 +50,18 @@ public class ExampleUnitTest {
 
 
     @Test
-    public void testDateUtils(){
+    public void testDateUtils() {
         DateUtils.getFirstSundayTimeMillisOfWeek();
 
+    }
+
+
+    @Test
+    public void testNextDay() {
+        for (int i = 1; i < 8; i++) {
+            int dayOfWeek = DateUtils.calNextDayDayOfWeek(i);
+            System.out.println(i + " : " + dayOfWeek);
+        }
     }
 
 

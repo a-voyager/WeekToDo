@@ -32,12 +32,6 @@ public class DataDao {
 
     public void insertTask(TaskDetailEntity taskDetailEntity) {
         mRealm.executeTransaction(realm -> {
-//            taskDetailEntity.setDayOfWeek(Calendar.THURSDAY);
-//            taskDetailEntity.setTimeStamp(System.currentTimeMillis());
-//            taskDetailEntity.setTitle("无标题");
-//            taskDetailEntity.setContent("测试文本");
-//            taskDetailEntity.setIcon(null);
-//            taskDetailEntity.setState(TaskState.DEFAULT);
             realm.copyToRealm(taskDetailEntity);
         });
     }
@@ -92,5 +86,9 @@ public class DataDao {
         mRealm.executeTransaction(realm -> entity.setState(state));
     }
 
+
+    public void close() {
+        mDataDao = null;
+    }
 
 }

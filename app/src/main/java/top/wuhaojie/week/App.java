@@ -6,7 +6,6 @@ import android.text.TextUtils;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.squareup.leakcanary.LeakCanary;
-import com.tencent.bugly.Bugly;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import java.io.BufferedReader;
@@ -44,7 +43,7 @@ public class App extends Application {
         strategy.setUploadProcess(processName == null || processName.equals(packageName));
 //        CrashReport.initCrashReport(getApplicationContext(), "684db223b4", true, strategy);
         strategy.setAppChannel("Test");
-        Bugly.init(getApplicationContext(), "684db223b4", true, strategy);
+//        Bugly.init(getApplicationContext(), "684db223b4", true, strategy);
 
 
         Realm.init(this);

@@ -2,6 +2,7 @@ package top.wuhaojie.week;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Environment;
 import android.text.TextUtils;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -9,6 +10,7 @@ import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -46,8 +48,13 @@ public class App extends Application {
 //        Bugly.init(getApplicationContext(), "684db223b4", true, strategy);
 
 
+        String name = "WeekToDo";
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), name);
+        file.mkdirs();
+
         Realm.init(this);
         RealmConfiguration configuration = new RealmConfiguration.Builder()
+                .directory(file)
                 .name("data.realm")
                 .build();
         Realm.setDefaultConfiguration(configuration);

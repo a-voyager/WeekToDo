@@ -1,11 +1,14 @@
 package top.wuhaojie.week;
 
 import android.content.Context;
+import android.os.Environment;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.io.File;
 
 import static org.junit.Assert.*;
 
@@ -23,4 +26,12 @@ public class ExampleInstrumentedTest {
 
         assertEquals("top.wuhaojie.week", appContext.getPackageName());
     }
+
+    @Test
+    public void testPath(){
+        String name = InstrumentationRegistry.getTargetContext().getPackageName();
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), name);
+//        if (!file.exists()) file.mkdirs();
+    }
+
 }

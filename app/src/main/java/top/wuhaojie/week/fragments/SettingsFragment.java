@@ -85,14 +85,25 @@ public class SettingsFragment extends PreferenceFragment {
             if (b) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 activity.switchNightMode(true);
-//                activity.getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-//                activity.getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 activity.switchNightMode(false);
             }
             return true;
         });
+
+        // 备份内容
+        findPreference(Constants.CONFIG_KEY.BACKUP).setOnPreferenceClickListener(preference -> {
+            activity.backupClick();
+            return true;
+        });
+
+        // 还原内容
+        findPreference(Constants.CONFIG_KEY.RECOVERY).setOnPreferenceClickListener(preference -> {
+            activity.recoveryClick();
+            return true;
+        });
+
 
     }
 }

@@ -48,13 +48,13 @@ dependencies {
     //    compile 'com.squareup.retrofit2:retrofit-adapters:2.1.0'
     //    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     //    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
-    //    compile 'io.reactivex:rxandroid:1.2.1'
     // message
     //    compile 'org.greenrobot:eventbus:3.0.0'
     // java_8
     // img loader
     // grid view
     //    compile 'in.srain.cube:grid-view-with-header-footer:1.0.12'
+    compile 'io.reactivex:rxandroid:1.2.1'
     compile 'com.jakewharton:butterknife:8.0.1'
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
@@ -62,15 +62,11 @@ dependencies {
     compile 'com.android.support:cardview-v7:24.2.1'
     compile 'me.tatarka:gradle-retrolambda:3.3.0-beta4'
     compile 'com.facebook.fresco:fresco:0.12.0'
-    compile 'com.android.support:support-vector-drawable:24.2.1'
+//    compile 'com.android.support:support-vector-drawable:24.2.1'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
     compile 'com.balysv:material-ripple:1.0.2'
 
-//    compile 'com.tencent.bugly:crashreport:latest.release'
-    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
-    compile 'com.tencent.bugly:nativecrashreport:latest.release'
-    //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本
 
     compile 'com.tencent.bugly:crashreport_upgrade:latest.release'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
     compile 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0

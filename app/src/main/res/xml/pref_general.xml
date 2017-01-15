@@ -29,6 +29,23 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="备份与还原">
+
+        <Preference
+            android:key="BACKUP"
+            android:summary="将数据备份/导出至外部存储设备"
+            android:title="备份内容"
+            />
+        <Preference
+            android:key="RECOVERY"
+            android:summary="还原备份的数据"
+            android:title="还原内容"
+            />
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="其他">
 
         <CheckBoxPreference

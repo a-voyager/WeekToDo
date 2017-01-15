@@ -2,7 +2,6 @@ package top.wuhaojie.week;
 
 import android.app.Application;
 import android.content.Context;
-import android.os.Environment;
 import android.text.TextUtils;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -16,6 +15,7 @@ import java.io.IOException;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import top.wuhaojie.week.constant.Constants;
 
 /**
  * Created by wuhaojie on 2016/11/30 9:21.
@@ -48,14 +48,13 @@ public class App extends Application {
 //        Bugly.init(getApplicationContext(), "684db223b4", true, strategy);
 
 
-        String name = "WeekToDo";
-        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), name);
+        File file = new File(Constants.ExternalStorageDirectory, Constants.DATABASE_FILE_PATH_FOLDER);
         file.mkdirs();
 
         Realm.init(this);
         RealmConfiguration configuration = new RealmConfiguration.Builder()
                 .directory(file)
-                .name("data.realm")
+                .name(Constants.DATABASE_FILE_PATH_FILE_NAME)
                 .build();
         Realm.setDefaultConfiguration(configuration);
         Fresco.initialize(this);

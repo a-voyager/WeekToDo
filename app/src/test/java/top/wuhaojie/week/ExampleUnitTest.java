@@ -2,6 +2,7 @@ package top.wuhaojie.week;
 
 import org.junit.Test;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.Random;
 
 import top.wuhaojie.week.data.ImageFactory;
 import top.wuhaojie.week.utils.DateUtils;
+import top.wuhaojie.week.views.FileUtils;
 
 import static org.junit.Assert.assertEquals;
 
@@ -62,6 +64,16 @@ public class ExampleUnitTest {
             int dayOfWeek = DateUtils.calNextDayDayOfWeek(i);
             System.out.println(i + " : " + dayOfWeek);
         }
+    }
+
+
+    @Test
+    public void testFileCopy() {
+        File src = new File("D://整数硬盘分区工具.exe");
+        File des = new File("D://整数硬盘分区工具_copy.exe");
+
+        FileUtils.copyFile(src, des);
+
     }
 
 

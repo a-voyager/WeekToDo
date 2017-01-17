@@ -2,6 +2,7 @@ package top.wuhaojie.week;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Build;
 import android.text.TextUtils;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -52,11 +53,12 @@ public class App extends Application {
         file.mkdirs();
 
         Realm.init(this);
-        RealmConfiguration configuration = new RealmConfiguration.Builder()
-                .directory(file)
-                .name(Constants.DATABASE_FILE_PATH_FILE_NAME)
-                .build();
-        Realm.setDefaultConfiguration(configuration);
+        RealmConfiguration.Builder builder = new RealmConfiguration.Builder()
+                .name(Constants.DATABASE_FILE_PATH_FILE_NAME);
+        // custom file not work on Android 7.0
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+            builder.directory(file);
+        Realm.setDefaultConfiguration(builder.build());
         Fresco.initialize(this);
 
 

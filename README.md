@@ -21,12 +21,14 @@
 | ButterKnife   |  视图注解     |
 | Fresco        | 图像加载      |
 |Material-Ripple| 水波纹特效    |
+| RxAndroid     | 响应式编程    |
 
 # 更新日志
 
 ### v1.1.1
  - 修复卸载应用后数据清空 BUG
  - 增加备份/还原/导出功能
+ - 优化 Android 7.0 兼容性
 
 ### v1.1.0
  - 增加推延任务功能

@@ -11,11 +11,9 @@ import top.wuhaojie.week.utils.DateUtils;
 
 public class DataDao {
 
-//    private Realm mRealm;
     private static volatile DataDao mDataDao;
 
     private DataDao() {
-//        mRealm = Realm.getDefaultInstance();
     }
 
 

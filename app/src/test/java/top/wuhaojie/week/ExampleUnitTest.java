@@ -11,7 +11,7 @@ import java.util.Random;
 
 import top.wuhaojie.week.data.ImageFactory;
 import top.wuhaojie.week.utils.DateUtils;
-import top.wuhaojie.week.views.FileUtils;
+import top.wuhaojie.week.utils.FileUtils;
 
 import static org.junit.Assert.assertEquals;
 

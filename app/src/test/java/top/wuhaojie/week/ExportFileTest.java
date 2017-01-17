@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import top.wuhaojie.week.utils.DateUtils;
-import top.wuhaojie.week.views.FileUtils;
+import top.wuhaojie.week.utils.FileUtils;
 
 /**
  * Created by wuhaojie on 2017/1/17 14:28.

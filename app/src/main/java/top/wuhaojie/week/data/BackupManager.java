@@ -10,7 +10,7 @@ import top.wuhaojie.week.constant.Constants;
 import top.wuhaojie.week.entities.TaskDetailEntity;
 import top.wuhaojie.week.entities.TaskState;
 import top.wuhaojie.week.utils.DateUtils;
-import top.wuhaojie.week.views.FileUtils;
+import top.wuhaojie.week.utils.FileUtils;
 
 /**
  * Created by wuhaojie on 2017/1/15 19:22.

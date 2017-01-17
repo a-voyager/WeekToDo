@@ -11,11 +11,11 @@ import top.wuhaojie.week.utils.DateUtils;
 
 public class DataDao {
 
-    private Realm mRealm;
+//    private Realm mRealm;
     private static volatile DataDao mDataDao;
 
     private DataDao() {
-        mRealm = Realm.getDefaultInstance();
+//        mRealm = Realm.getDefaultInstance();
     }
 
 
@@ -31,19 +31,19 @@ public class DataDao {
     }
 
     public void insertTask(TaskDetailEntity taskDetailEntity) {
-        mRealm.executeTransaction(realm -> {
+        Realm.getDefaultInstance().executeTransaction(realm -> {
             realm.copyToRealm(taskDetailEntity);
         });
     }
 
     public RealmResults<TaskDetailEntity> findAllTask() {
-        return mRealm.where(TaskDetailEntity.class)
+        return Realm.getDefaultInstance().where(TaskDetailEntity.class)
                 .findAllSorted("timeStamp");
     }
 
 
     public RealmResults<TaskDetailEntity> findAllTask(int dayOfWeek) {
-        return mRealm.where(TaskDetailEntity.class)
+        return Realm.getDefaultInstance().where(TaskDetailEntity.class)
                 .equalTo("dayOfWeek", dayOfWeek)
                 .findAllSorted("timeStamp");
     }
@@ -51,20 +51,20 @@ public class DataDao {
 
     public RealmResults<TaskDetailEntity> findAllTaskOfThisWeekFromSunday() {
         long sundayTimeMillisOfWeek = DateUtils.getFirstSundayTimeMillisOfWeek();
-        return mRealm.where(TaskDetailEntity.class)
+        return Realm.getDefaultInstance().where(TaskDetailEntity.class)
                 .greaterThan("timeStamp", sundayTimeMillisOfWeek)
                 .findAll();
     }
 
 
     public void editTask(TaskDetailEntity oldTask, TaskDetailEntity newTask) {
-        mRealm.executeTransaction(realm -> oldTask.setTaskDetailEntity(newTask));
+        Realm.getDefaultInstance().executeTransaction(realm -> oldTask.setTaskDetailEntity(newTask));
     }
 
 
     public void deleteTask(TaskDetailEntity entity) {
 
-        mRealm.executeTransaction(realm -> {
+        Realm.getDefaultInstance().executeTransaction(realm -> {
             TaskDetailEntity first = realm.where(TaskDetailEntity.class)
                     .equalTo("dayOfWeek", entity.getDayOfWeek())
                     .equalTo("title", entity.getTitle())
@@ -83,7 +83,7 @@ public class DataDao {
 
 
     public void switchTaksState(TaskDetailEntity entity, int state) {
-        mRealm.executeTransaction(realm -> entity.setState(state));
+        Realm.getDefaultInstance().executeTransaction(realm -> entity.setState(state));
     }
 
 

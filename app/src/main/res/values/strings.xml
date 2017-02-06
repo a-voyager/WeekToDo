@@ -17,6 +17,9 @@
 
 
     <string name="about_text">Copyright © 2015 WuHaojie.\nAll Rights Reserved.</string>
+    <string name="shortcut_disable_label">不可编辑</string>
+    <string name="shortcut_long_label">添加任务</string>
+    <string name="shortcut_short_label">添加任务</string>
 
 
 </resources>

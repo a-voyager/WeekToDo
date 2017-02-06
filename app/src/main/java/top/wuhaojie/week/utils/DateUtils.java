@@ -37,11 +37,18 @@ public class DateUtils {
 
 
     private static class FormatDateTimeHolder {
-        static SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.CHINA);
+        static SimpleDateFormat mSimpleDateTimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.CHINA);
+        static SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.CHINA);
         static Date mDate = new Date();
     }
 
     public static String formatDateTime(long time) {
+        if (time <= 0) throw new IllegalArgumentException("time shouldn't <= 0");
+        FormatDateTimeHolder.mDate.setTime(time);
+        return FormatDateTimeHolder.mSimpleDateTimeFormat.format(FormatDateTimeHolder.mDate);
+    }
+
+    public static String formateDate(long time) {
         if (time <= 0) throw new IllegalArgumentException("time shouldn't <= 0");
         FormatDateTimeHolder.mDate.setTime(time);
         return FormatDateTimeHolder.mSimpleDateFormat.format(FormatDateTimeHolder.mDate);

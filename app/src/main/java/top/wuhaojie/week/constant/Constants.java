@@ -30,6 +30,7 @@ public interface Constants {
     interface MODE_OF_NEW_ACT {
         int MODE_EDIT = 5;
         int MODE_CREATE = 6;
+        int MODE_QUICK = 7;
     }
 
     interface CONFIG_KEY {

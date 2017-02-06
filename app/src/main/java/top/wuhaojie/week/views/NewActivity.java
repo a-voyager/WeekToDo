@@ -25,9 +25,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -37,9 +35,11 @@ import butterknife.OnClick;
 import top.wuhaojie.week.R;
 import top.wuhaojie.week.adpter.ChoosePriorityAdapter;
 import top.wuhaojie.week.constant.Constants;
+import top.wuhaojie.week.data.DataDao;
 import top.wuhaojie.week.data.ImageFactory;
 import top.wuhaojie.week.entities.TaskDetailEntity;
 import top.wuhaojie.week.entities.TaskState;
+import top.wuhaojie.week.utils.DateUtils;
 import top.wuhaojie.week.utils.DensityUtil;
 import top.wuhaojie.week.utils.SnackBarUtils;
 
@@ -76,6 +76,10 @@ public class NewActivity extends AppCompatActivity {
     private int mCurrPriority;
     private ChoosePriorityAdapter mChoosePriorityAdapter;
     private TaskDetailEntity mEntityFromMain;
+    /**
+     * Current state
+     */
+    private IState mState;
 
     @OnClick(R.id.ll_priority)
     public void onClick() {
@@ -156,6 +160,30 @@ public class NewActivity extends AppCompatActivity {
 
     private interface IState {
         void initView(Intent intent, Bundle savedInstanceState);
+
+        void onComplete(TaskDetailEntity entity);
+    }
+
+    private class QuickNew implements IState {
+
+        @Override
+        public void initView(Intent intent, Bundle savedInstanceState) {
+
+            if (getSupportActionBar() != null)
+                getSupportActionBar().setTitle("添加任务");
+
+            mEtContent.requestFocus();
+            int i = new Random(System.currentTimeMillis()).nextInt(mBgImgs.size());
+            loadBgImgWithIndex(i);
+            String date = DateUtils.formateDate(System.currentTimeMillis());
+            mTvDate.setText(date);
+            mChoosePriorityAdapter.setCheckItem(0);
+        }
+
+        @Override
+        public void onComplete(TaskDetailEntity entity) {
+            DataDao.getInstance().insertTask(entity);
+        }
     }
 
     private class CreateNew implements IState {
@@ -169,9 +197,18 @@ public class NewActivity extends AppCompatActivity {
             mEtContent.requestFocus();
             int i = new Random(System.currentTimeMillis()).nextInt(mBgImgs.size());
             loadBgImgWithIndex(i);
-            String date = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+            String date = DateUtils.formateDate(System.currentTimeMillis());
             mTvDate.setText(date);
             mChoosePriorityAdapter.setCheckItem(0);
+        }
+
+        @Override
+        public void onComplete(TaskDetailEntity entity) {
+            Intent intent = new Intent();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Constants.INTENT_BUNDLE_NEW_TASK_DETAIL, entity);
+            intent.putExtras(bundle);
+            setResult(RESULT_OK, intent);
         }
     }
 
@@ -203,14 +240,27 @@ public class NewActivity extends AppCompatActivity {
             mEtTitle.setText(mEntityFromMain.getTitle());
             mEtContent.setText(mEntityFromMain.getContent());
             loadBgImgWithUri(mEntityFromMain.getIcon());
-            String date = new SimpleDateFormat("yyyy/MM/dd").format(new Date(mEntityFromMain.getTimeStamp()));
+            String date = DateUtils.formateDate(mEntityFromMain.getTimeStamp());
             mTvDate.setText(date);
             mIvCurrPriority.setImageResource(ImageFactory.createPriorityIcons()[mEntityFromMain.getPriority()]);
             mChoosePriorityAdapter.setCheckItem(mEntityFromMain.getPriority());
         }
+
+        @Override
+        public void onComplete(TaskDetailEntity entity) {
+            Intent intent = new Intent();
+            Bundle bundle = new Bundle();
+            // edited & content is changed
+            bundle.putSerializable(Constants.INTENT_BUNDLE_NEW_TASK_DETAIL, entity);
+            intent.putExtras(bundle);
+            setResult(RESULT_OK, intent);
+        }
     }
 
 
+    /**
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -234,13 +284,15 @@ public class NewActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        int mode = intent.getIntExtra(Constants.INTENT_EXTRA_MODE_OF_NEW_ACT, Constants.MODE_OF_NEW_ACT.MODE_CREATE);
-        IState state;
+        int mode = intent.getIntExtra(Constants.INTENT_EXTRA_MODE_OF_NEW_ACT, Constants.MODE_OF_NEW_ACT.MODE_QUICK);
         if (mode == Constants.MODE_OF_NEW_ACT.MODE_EDIT)
-            state = new EditOld();
+            mState = new EditOld();
+        else if (mode == Constants.MODE_OF_NEW_ACT.MODE_CREATE)
+            mState = new CreateNew();
         else
-            state = new CreateNew();
-        state.initView(intent, savedInstanceState);
+            mState = new QuickNew();
+
+        mState.initView(intent, savedInstanceState);
 
 
         View decorView = this.getWindow().getDecorView();
@@ -317,22 +369,7 @@ public class NewActivity extends AppCompatActivity {
         taskDetailEntity.setIcon(mCurrBgUri);
         taskDetailEntity.setPriority(mCurrPriority);
 
-        Intent intent = new Intent();
-        Bundle bundle = new Bundle();
-
-        if (mEntityFromMain == null) {
-            // insert a new task
-            bundle.putSerializable(Constants.INTENT_BUNDLE_NEW_TASK_DETAIL, taskDetailEntity);
-            intent.putExtras(bundle);
-            setResult(RESULT_OK, intent);
-        } else if (!mEntityFromMain.equals(taskDetailEntity)) {
-            // edited & content is changed
-            bundle.putSerializable(Constants.INTENT_BUNDLE_NEW_TASK_DETAIL, taskDetailEntity);
-            intent.putExtras(bundle);
-            setResult(RESULT_OK, intent);
-        } else {
-            setResult(RESULT_CANCELED, intent);
-        }
+        if (mState != null) mState.onComplete(taskDetailEntity);
 
         finish();
 

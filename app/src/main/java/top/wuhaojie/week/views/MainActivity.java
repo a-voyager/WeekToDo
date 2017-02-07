@@ -191,7 +191,7 @@ public class MainActivity extends BaseActivity implements PageFragment.OnPageFra
 
     @Override
     public void showContextMenu(final int position, final TaskDetailEntity entity) {
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        BottomSheetDialog bottomSheetDialog = new FixedBottomSheetDialog(this);
         View view = getLayoutInflater().inflate(R.layout.dl_task_item_menu, mClMain, false);
 
         TextView tvFlagText = (TextView) view.findViewById(R.id.tv_flag_task);
@@ -235,6 +235,7 @@ public class MainActivity extends BaseActivity implements PageFragment.OnPageFra
 
 
         bottomSheetDialog.setContentView(view);
+        bottomSheetDialog.setOwnerActivity(this);
         bottomSheetDialog.show();
     }
 

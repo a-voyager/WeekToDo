@@ -9,9 +9,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,9 +19,9 @@ import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.RealmResults;
+import top.wuhaojie.week.BaseActivity;
 import top.wuhaojie.week.R;
 import top.wuhaojie.week.adpter.MainPageAdapter;
 import top.wuhaojie.week.constant.Constants;
@@ -37,11 +35,9 @@ import top.wuhaojie.week.utils.DateUtils;
 import top.wuhaojie.week.utils.PreferenceUtils;
 import top.wuhaojie.week.utils.SnackBarUtils;
 
-public class MainActivity extends AppCompatActivity implements PageFragment.OnPageFragmentInteractionListener {
+public class MainActivity extends BaseActivity implements PageFragment.OnPageFragmentInteractionListener {
 
     public static final String TAG = "MainActivity";
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
     @BindView(R.id.tab)
     TabLayout mTab;
     @BindView(R.id.vp)
@@ -56,9 +52,6 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-        setSupportActionBar(mToolbar);
 
         mItems = PageFactory.createPages();
 
@@ -108,6 +101,11 @@ public class MainActivity extends AppCompatActivity implements PageFragment.OnPa
         }
 
 
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_main;
     }
 
     @Override

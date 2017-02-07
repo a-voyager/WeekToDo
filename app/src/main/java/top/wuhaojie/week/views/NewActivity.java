@@ -9,10 +9,8 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,8 +28,8 @@ import java.util.List;
 import java.util.Random;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
+import top.wuhaojie.week.BaseActivity;
 import top.wuhaojie.week.R;
 import top.wuhaojie.week.adpter.ChoosePriorityAdapter;
 import top.wuhaojie.week.constant.Constants;
@@ -43,10 +41,8 @@ import top.wuhaojie.week.utils.DateUtils;
 import top.wuhaojie.week.utils.DensityUtil;
 import top.wuhaojie.week.utils.SnackBarUtils;
 
-public class NewActivity extends AppCompatActivity {
+public class NewActivity extends BaseActivity {
 
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
     @BindView(R.id.fab)
     FloatingActionButton mFab;
     @BindView(R.id.cl)
@@ -264,9 +260,6 @@ public class NewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new);
-        ButterKnife.bind(this);
-        setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -313,6 +306,11 @@ public class NewActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_new;
     }
 
 

@@ -7,30 +7,26 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
 import java.util.Calendar;
 
+import top.wuhaojie.week.BaseActivity;
 import top.wuhaojie.week.R;
 import top.wuhaojie.week.constant.Constants;
 import top.wuhaojie.week.data.BackupManager;
 import top.wuhaojie.week.fragments.SettingsFragment;
 import top.wuhaojie.week.utils.SnackBarUtils;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends BaseActivity {
 
     private int mCurrIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         SettingsFragment settingsFragment = new SettingsFragment();
@@ -46,6 +42,11 @@ public class SettingsActivity extends AppCompatActivity {
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setTitle("请稍后");
 
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_settings;
     }
 
 

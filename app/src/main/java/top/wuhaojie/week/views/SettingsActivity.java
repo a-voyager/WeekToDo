@@ -13,7 +13,7 @@ import android.view.View;
 
 import java.util.Calendar;
 
-import top.wuhaojie.week.BaseActivity;
+import top.wuhaojie.week.base.BaseActivity;
 import top.wuhaojie.week.R;
 import top.wuhaojie.week.constant.Constants;
 import top.wuhaojie.week.data.BackupManager;

@@ -8,7 +8,7 @@ import android.widget.Button;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import top.wuhaojie.week.BaseActivity;
+import top.wuhaojie.week.base.BaseActivity;
 import top.wuhaojie.week.R;
 
 public class AboutActivity extends BaseActivity {

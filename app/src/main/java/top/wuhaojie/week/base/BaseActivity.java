@@ -1,4 +1,4 @@
-package top.wuhaojie.week;
+package top.wuhaojie.week.base;
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import top.wuhaojie.week.R;
 
 /**
  * Created by wuhaojie on 17-2-7.

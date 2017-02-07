@@ -29,7 +29,7 @@ import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import top.wuhaojie.week.BaseActivity;
+import top.wuhaojie.week.base.BaseActivity;
 import top.wuhaojie.week.R;
 import top.wuhaojie.week.adpter.ChoosePriorityAdapter;
 import top.wuhaojie.week.constant.Constants;

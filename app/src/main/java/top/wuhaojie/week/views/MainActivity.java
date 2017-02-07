@@ -2,8 +2,6 @@ package top.wuhaojie.week.views;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -17,13 +15,17 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.realm.RealmResults;
-import top.wuhaojie.week.BaseActivity;
+import rx.Observable;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import top.wuhaojie.week.R;
 import top.wuhaojie.week.adpter.MainPageAdapter;
+import top.wuhaojie.week.base.BaseActivity;
 import top.wuhaojie.week.constant.Constants;
 import top.wuhaojie.week.data.DataDao;
 import top.wuhaojie.week.data.PageFactory;
@@ -119,7 +121,6 @@ public class MainActivity extends BaseActivity implements PageFragment.OnPageFra
         super.onDestroy();
         mItems = null;
         DataDao.getInstance().close();
-        mHandler = null;
     }
 
     @OnClick(R.id.fab)
@@ -219,17 +220,17 @@ public class MainActivity extends BaseActivity implements PageFragment.OnPageFra
         });
         view.findViewById(R.id.ll_action_delete).setOnClickListener(v -> {
             bottomSheetDialog.dismiss();
-            deleteTaskWithDelay(position, entity);
+            Subscription subscription = deleteTaskWithDelay(position, entity);
 
-            SnackBarUtils.showAction(mClMain, "即将删除", "撤销", v1 -> mHandler.removeMessages(Constants.HANDLER_WHAT_DELETE_TASK));
+            SnackBarUtils.showAction(mClMain, "即将删除", "撤销", v1 -> subscription.unsubscribe());
 
         });
 
         view.findViewById(R.id.ll_action_put_off).setOnClickListener(v -> {
             bottomSheetDialog.dismiss();
-            putOffTaskOneDayWithDelay(position, entity);
+            Subscription subscription = putOffTaskOneDayWithDelay(position, entity);
 
-            SnackBarUtils.showAction(mClMain, "该任务即将推延一天", "撤销", v12 -> mHandler.removeMessages(Constants.HANDLER_WHAT_PUT_OFF_TASK));
+            SnackBarUtils.showAction(mClMain, "该任务即将推延一天", "撤销", v12 -> subscription.unsubscribe());
         });
 
 
@@ -246,32 +247,15 @@ public class MainActivity extends BaseActivity implements PageFragment.OnPageFra
         fragment.getAdapter().notifyItemChanged(position);
     }
 
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
 
-            switch (msg.what) {
-                case Constants.HANDLER_WHAT_DELETE_TASK:
-                    deleteTask(msg.arg1, (TaskDetailEntity) msg.obj);
-                    break;
-                case Constants.HANDLER_WHAT_PUT_OFF_TASK:
-                    putOffTaskOneDay(msg.arg1, (TaskDetailEntity) msg.obj);
-                    break;
-            }
-
-
-        }
-    };
-
-
-    private void putOffTaskOneDayWithDelay(int position, TaskDetailEntity entity) {
-        Message message = new Message();
-        message.what = Constants.HANDLER_WHAT_PUT_OFF_TASK;
-        message.obj = entity;
-        message.arg1 = position;
-        mHandler.sendMessageDelayed(message, 2000);
-
+    private Subscription putOffTaskOneDayWithDelay(int position, TaskDetailEntity entity) {
+        return Observable
+                .just(1)
+                .delay(2, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(a -> {
+                    putOffTaskOneDay(position, entity);
+                });
     }
 
     private void putOffTaskOneDay(int position, TaskDetailEntity entity) {
@@ -287,12 +271,20 @@ public class MainActivity extends BaseActivity implements PageFragment.OnPageFra
 
     }
 
-    private void deleteTaskWithDelay(int position, TaskDetailEntity entity) {
-        Message message = new Message();
-        message.what = Constants.HANDLER_WHAT_DELETE_TASK;
-        message.obj = entity;
-        message.arg1 = position;
-        mHandler.sendMessageDelayed(message, 2000);
+    private Subscription deleteTaskWithDelay(int position, TaskDetailEntity entity) {
+//        Message message = new Message();
+//        message.what = Constants.HANDLER_WHAT_DELETE_TASK;
+//        message.obj = entity;
+//        message.arg1 = position;
+//        mHandler.sendMessageDelayed(message, 2000);
+
+        return Observable.just(1)
+                .delay(2, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(integer -> {
+                    deleteTask(position, entity);
+                });
+
     }
 
     private void deleteTask(int position, TaskDetailEntity entity) {

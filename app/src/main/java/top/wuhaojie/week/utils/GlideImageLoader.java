@@ -26,8 +26,12 @@ public class GlideImageLoader extends ImageLoader {
 
     private final RequestManager mRequestManager;
 
+    private final GlideCircleTransform GLIDE_CIRCLE_TRANSFORM;
+
+
     private GlideImageLoader(Context context) {
         mRequestManager = Glide.with(context);
+        GLIDE_CIRCLE_TRANSFORM = new GlideCircleTransform(context);
     }
 
 
@@ -37,6 +41,12 @@ public class GlideImageLoader extends ImageLoader {
 
     @Override
     public void load(String uri, View view) {
+        load(uri, view, OPTION_CENTER_CROP);
+    }
+
+
+    @Override
+    protected void loadWithOptions(String uri, View view, int options) {
         if (TextUtils.isEmpty(uri) || view == null)
             throw new IllegalArgumentException("uri == null or view == null");
         if (!(view instanceof ImageView))
@@ -45,21 +55,22 @@ public class GlideImageLoader extends ImageLoader {
         // 兼容旧版本
         if (uri.startsWith("asset:///")) uri = uri.substring(9);
         DrawableRequestBuilder<String> builder = mRequestManager
-                .load("file:///android_asset/" + uri)
-                .centerCrop();
-        builder
-                .into(iv);
+                .load("file:///android_asset/" + uri);
+        if (hasOption(OPTION_CENTER_CROP)) builder.centerCrop();
+        if (hasOption(OPTION_CIRCLE_CROP)) builder.transform(GLIDE_CIRCLE_TRANSFORM);
+        builder.into(iv);
     }
-
-
 
     @Override
     protected void close() {
         super.close();
     }
 
+
     private static class GlideCircleTransform extends BitmapTransformation {
-        public GlideCircleTransform(Context context) {
+
+
+        GlideCircleTransform(Context context) {
             super(context);
         }
 

@@ -34,20 +34,24 @@ public abstract class ImageLoader {
 
     public abstract void load(String uri, View view);
 
-    @CallSuper
-    public void load(String uri, View view, int options) {
+    public final void load(String uri, View view, int options) {
         this.mOptions = options;
+        loadWithOptions(uri, view, options);
+    }
+
+    protected void loadWithOptions(String uri, View view, int options) {
+        load(uri, view);
     }
 
 
-    public interface OPTIONS {
-        int OPTION_CENTER_CROP = FLAG << 1;
-        int OPTION_CIRCLE_CROP = FLAG << 2;
-    }
+    public static final int OPTION_CENTER_CROP = FLAG << 1;
+    public static final int OPTION_CIRCLE_CROP = FLAG << 2;
 
     protected final boolean hasOption(int option) {
-        // 0010 & 1101 == 0
-        return (mOptions & (~option)) == 0;
+        // ( 0011 & 0001 ) ^ 0001 == 0 ok
+        // ( 0011 & 1000 ) ^ 1000 != 0 not ok
+        // 0 & 0 = 0 ; 00 ^ 10 != 0
+        return ((mOptions & option) ^ option) == 0;
     }
 
 }

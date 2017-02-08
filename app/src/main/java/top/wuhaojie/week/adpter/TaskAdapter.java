@@ -103,7 +103,8 @@ public class TaskAdapter extends RecyclerView.Adapter {
             mTvContent.setText(s);
 
             // ICON
-            ImageLoader.get().load(entity.getIcon(), mIvIcon);
+            ImageLoader.get().load(entity.getIcon(), mIvIcon, ImageLoader.OPTION_CENTER_CROP
+                    | ImageLoader.OPTION_CIRCLE_CROP);
 
             // Priority
             if (showPriority) {

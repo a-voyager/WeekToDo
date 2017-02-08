@@ -14,8 +14,8 @@ public class ImageFactory {
     private ImageFactory() {
     }
 
-    private static final String[] ids = new String[]{"asset:///bg_autumn_tree-min.jpg", "asset:///bg_kites-min.png", "asset:///bg_lake-min.jpg", "asset:///bg_leaves-min.jpg",
-            "asset:///bg_magnolia_trees-min.jpg", "asset:///bg_solda-min.jpg", "asset:///bg_tree-min.jpg", "asset:///bg_tulip-min.jpg"};
+    private static final String[] ids = new String[]{"bg_autumn_tree-min.jpg", "bg_kites-min.png", "bg_lake-min.jpg", "bg_leaves-min.jpg",
+            "bg_magnolia_trees-min.jpg", "bg_solda-min.jpg", "bg_tree-min.jpg", "bg_tulip-min.jpg"};
 
 
     public static List<String> createBgImgs() {

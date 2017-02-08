@@ -62,19 +62,16 @@ dependencies {
     compile 'com.android.support:cardview-v7:25.1.1'
     compile 'me.tatarka:gradle-retrolambda:3.3.0-beta4'
     compile 'com.facebook.fresco:fresco:0.12.0'
-//    compile 'com.android.support:support-vector-drawable:24.2.1'
+    //    compile 'com.android.support:support-vector-drawable:24.2.1'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
     compile 'com.balysv:material-ripple:1.0.2'
-
-
-    compile 'com.tencent.bugly:crashreport_upgrade:latest.release'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
-    compile 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
-
-
+    compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
+    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
+    compile 'com.tencent.bugly:nativecrashreport:latest.release'
+    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-
-
+    compile 'com.github.bumptech.glide:glide:3.7.0'
 }

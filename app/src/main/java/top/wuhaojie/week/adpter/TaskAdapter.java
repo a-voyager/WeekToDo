@@ -9,8 +9,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-
 import java.util.List;
 
 import butterknife.BindView;
@@ -19,6 +17,7 @@ import top.wuhaojie.week.R;
 import top.wuhaojie.week.data.ImageFactory;
 import top.wuhaojie.week.entities.TaskDetailEntity;
 import top.wuhaojie.week.entities.TaskState;
+import top.wuhaojie.week.interfaces.ImageLoader;
 
 /**
  * Created by wuhaojie on 2016/11/29 21:35.
@@ -73,7 +72,7 @@ public class TaskAdapter extends RecyclerView.Adapter {
         TextView mTvContent;
         TaskDetailEntity entity;
         @BindView(R.id.sdv_icon)
-        SimpleDraweeView mSdvIcon;
+        ImageView mIvIcon;
         @BindView(R.id.iv_curr_priority)
         ImageView mIvCurrPriority;
         @BindView(R.id.ll_task_finished_mask)
@@ -104,7 +103,7 @@ public class TaskAdapter extends RecyclerView.Adapter {
             mTvContent.setText(s);
 
             // ICON
-            mSdvIcon.setImageURI(entity.getIcon());
+            ImageLoader.get().load(entity.getIcon(), mIvIcon);
 
             // Priority
             if (showPriority) {

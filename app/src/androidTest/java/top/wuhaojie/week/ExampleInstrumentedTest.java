@@ -4,13 +4,17 @@ import android.content.Context;
 import android.os.Environment;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import android.view.View;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Instrumentation test, which will execute on an Android device.
@@ -32,6 +36,19 @@ public class ExampleInstrumentedTest {
         String name = InstrumentationRegistry.getTargetContext().getPackageName();
         File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), name);
 //        if (!file.exists()) file.mkdirs();
+    }
+
+
+    @Test
+    public void fresco(){
+        Fresco.initialize(InstrumentationRegistry.getTargetContext());
+        SimpleDraweeView simpleDraweeView = new SimpleDraweeView(InstrumentationRegistry.getContext());
+        View v = simpleDraweeView;
+        View v2 = new View(InstrumentationRegistry.getTargetContext());
+        boolean assignableFrom = SimpleDraweeView.class.isAssignableFrom(v.getClass());
+        boolean assignableFrom2 = SimpleDraweeView.class.isAssignableFrom(v2.getClass());
+        System.out.println(assignableFrom);
+        System.out.println(assignableFrom2);
     }
 
 }

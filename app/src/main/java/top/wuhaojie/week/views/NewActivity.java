@@ -21,22 +21,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import top.wuhaojie.week.base.BaseActivity;
 import top.wuhaojie.week.R;
 import top.wuhaojie.week.adpter.ChoosePriorityAdapter;
+import top.wuhaojie.week.base.BaseActivity;
 import top.wuhaojie.week.constant.Constants;
 import top.wuhaojie.week.data.DataDao;
 import top.wuhaojie.week.data.ImageFactory;
 import top.wuhaojie.week.entities.TaskDetailEntity;
 import top.wuhaojie.week.entities.TaskState;
+import top.wuhaojie.week.interfaces.ImageLoader;
 import top.wuhaojie.week.utils.DateUtils;
 import top.wuhaojie.week.utils.DensityUtil;
 import top.wuhaojie.week.utils.SnackBarUtils;
@@ -52,7 +51,7 @@ public class NewActivity extends BaseActivity {
     @BindView(R.id.et_content)
     EditText mEtContent;
     @BindView(R.id.sdv_bg)
-    SimpleDraweeView mSdvBg;
+    ImageView mIvBg;
     @BindView(R.id.tv_date)
     TextView mTvDate;
     private final List<String> mBgImgs = ImageFactory.createBgImgs();
@@ -320,7 +319,7 @@ public class NewActivity extends BaseActivity {
 
     public void loadBgImgWithUri(String uri) {
         mCurrBgUri = uri;
-        mSdvBg.setImageURI(uri);
+        ImageLoader.get().load(uri, mIvBg);
     }
 
 

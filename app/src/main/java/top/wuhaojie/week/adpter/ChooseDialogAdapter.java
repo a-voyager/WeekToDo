@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import top.wuhaojie.week.R;
 import top.wuhaojie.week.data.ImageFactory;
+import top.wuhaojie.week.interfaces.ImageLoader;
 
 /**
  * Created by wuhaojie on 2016/12/6 9:59.
@@ -81,7 +80,7 @@ public class ChooseDialogAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Holder h = (Holder) holder;
-        h.mSdvIcon.setImageURI(mList.get(position).uri);
+        ImageLoader.get().load(mList.get(position).uri, h.mIvIcon);
         h.mIvMask.setVisibility(View.INVISIBLE);
         if (mCheckItem == position) {
             h.mIvMask.setVisibility(View.VISIBLE);
@@ -99,7 +98,7 @@ public class ChooseDialogAdapter extends RecyclerView.Adapter {
         @BindView(R.id.iv_mask)
         ImageView mIvMask;
         @BindView(R.id.sdv_icon)
-        SimpleDraweeView mSdvIcon;
+        ImageView mIvIcon;
 
         public Holder(View itemView) {
             super(itemView);

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Build;
 import android.text.TextUtils;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
 
@@ -17,6 +16,8 @@ import java.io.IOException;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import top.wuhaojie.week.constant.Constants;
+import top.wuhaojie.week.interfaces.ImageLoader;
+import top.wuhaojie.week.utils.GlideImageLoader;
 
 /**
  * Created by wuhaojie on 2016/11/30 9:21.
@@ -59,8 +60,8 @@ public class App extends Application {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
             builder.directory(file);
         Realm.setDefaultConfiguration(builder.build());
-        Fresco.initialize(this);
-
+//        Fresco.initialize(this);
+        ImageLoader.init(GlideImageLoader.create(this));
 
     }
 
@@ -93,4 +94,10 @@ public class App extends Application {
         return null;
     }
 
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        ImageLoader.shutdown();
+    }
 }

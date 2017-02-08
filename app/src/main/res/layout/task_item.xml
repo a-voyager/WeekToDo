@@ -23,12 +23,10 @@
             android:layout_height="72dp"
             android:layout_gravity="center_vertical">
 
-            <com.facebook.drawee.view.SimpleDraweeView
+            <ImageView
                 android:id="@+id/sdv_icon"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:placeholderImage="@mipmap/ic_launcher"
-                app:roundAsCircle="true"/>
+                android:layout_height="match_parent"/>
 
 
         </FrameLayout>

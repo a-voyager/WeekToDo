@@ -46,7 +46,7 @@ public class NotifyService extends Service {
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
-        android.support.v4.app.NotificationCompat.Action action = new NotificationCompat.Action(R.mipmap.ic_launcher, "查看", pendingIntent);
+        android.support.v4.app.NotificationCompat.Action action = new NotificationCompat.Action(R.drawable.icon_red, "查看", pendingIntent);
         Notification notification = new NotificationCompat
                 .Builder(this)
                 .setAutoCancel(true)

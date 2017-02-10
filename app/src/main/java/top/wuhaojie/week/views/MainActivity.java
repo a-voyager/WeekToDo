@@ -1,5 +1,6 @@
 package top.wuhaojie.week.views;
 
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
@@ -108,6 +109,10 @@ public class MainActivity extends BaseActivity implements PageFragment.OnPageFra
         // 智能提醒未完成任务
         if (PreferenceUtils.getInstance(this).getBooleanParam(Constants.CONFIG_KEY.AUTO_NOTIFY, false))
             AlarmHelper.startNotifyAlarm(this);
+
+        // 清除通知
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.cancel(Constants.AUTO_NOTIFY_NOTIFICATION_ID);
 
     }
 

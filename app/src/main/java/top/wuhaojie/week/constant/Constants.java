@@ -27,6 +27,10 @@ public interface Constants {
     String DATABASE_FILE_BACKUP_PATH_FOLDER = "番茄周/备份";
     String DATABASE_FILE_EXPORT_PATH_FOLDER = "番茄周/导出";
 
+    long AUTO_NOTIFY_INTERVAL_TIME = 60 * 60 * 1000;
+
+    int AUTO_NOTIFY_NOTIFICATION_ID = 0;
+
     interface MODE_OF_NEW_ACT {
         int MODE_EDIT = 5;
         int MODE_CREATE = 6;

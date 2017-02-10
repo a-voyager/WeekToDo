@@ -12,6 +12,7 @@ import java.util.Calendar;
 
 import io.realm.RealmResults;
 import top.wuhaojie.week.R;
+import top.wuhaojie.week.constant.Constants;
 import top.wuhaojie.week.data.DataDao;
 import top.wuhaojie.week.entities.TaskDetailEntity;
 import top.wuhaojie.week.views.MainActivity;
@@ -54,7 +55,7 @@ public class NotifyService extends Service {
                 .setContentText(content)
                 .setSmallIcon(R.drawable.icon_red)
                 .build();
-        manager.notify(0, notification);
+        manager.notify(Constants.AUTO_NOTIFY_NOTIFICATION_ID, notification);
 
         return code;
     }

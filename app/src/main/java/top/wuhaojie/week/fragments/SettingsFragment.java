@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatDelegate;
 
 import top.wuhaojie.week.R;
 import top.wuhaojie.week.constant.Constants;
+import top.wuhaojie.week.data.AlarmHelper;
 import top.wuhaojie.week.utils.PreferenceUtils;
 import top.wuhaojie.week.views.SettingsActivity;
 
@@ -101,6 +102,17 @@ public class SettingsFragment extends PreferenceFragment {
         // 还原内容
         findPreference(Constants.CONFIG_KEY.RECOVERY).setOnPreferenceClickListener(preference -> {
             activity.recoveryClick();
+            return true;
+        });
+
+        // 智能提醒完成任务
+        findPreference(Constants.CONFIG_KEY.AUTO_NOTIFY).setOnPreferenceChangeListener((p, n) -> {
+            boolean b = (boolean) n;
+            if (b) {
+                AlarmHelper.startNotifyAlarm(activity);
+            } else {
+                AlarmHelper.cancelNotifyAlarm(activity);
+            }
             return true;
         });
 

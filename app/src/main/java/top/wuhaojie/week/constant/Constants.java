@@ -41,6 +41,7 @@ public interface Constants {
         String AUTO_SWITCH_NIGHT_MODE = "AUTO_SWITCH_NIGHT_MODE";
         String BACKUP = "BACKUP";
         String RECOVERY = "RECOVERY";
+        String AUTO_NOTIFY = "AUTO_NOTIFY";
     }
 
 

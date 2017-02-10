@@ -27,6 +27,7 @@ import top.wuhaojie.week.R;
 import top.wuhaojie.week.adpter.MainPageAdapter;
 import top.wuhaojie.week.base.BaseActivity;
 import top.wuhaojie.week.constant.Constants;
+import top.wuhaojie.week.data.AlarmHelper;
 import top.wuhaojie.week.data.DataDao;
 import top.wuhaojie.week.data.PageFactory;
 import top.wuhaojie.week.entities.MainPageItem;
@@ -92,6 +93,8 @@ public class MainActivity extends BaseActivity implements PageFragment.OnPageFra
             fragment.insertTask(t);
         }
 
+
+        // 夜间模式
         if (PreferenceUtils.getInstance(this).getBooleanParam(Constants.CONFIG_KEY.AUTO_SWITCH_NIGHT_MODE, true)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
         } else {
@@ -102,6 +105,9 @@ public class MainActivity extends BaseActivity implements PageFragment.OnPageFra
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
+        // 智能提醒未完成任务
+        if (PreferenceUtils.getInstance(this).getBooleanParam(Constants.CONFIG_KEY.AUTO_NOTIFY, false))
+            AlarmHelper.startNotifyAlarm(this);
 
     }
 

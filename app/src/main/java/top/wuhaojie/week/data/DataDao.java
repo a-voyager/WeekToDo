@@ -3,6 +3,7 @@ package top.wuhaojie.week.data;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import top.wuhaojie.week.entities.TaskDetailEntity;
+import top.wuhaojie.week.entities.TaskState;
 import top.wuhaojie.week.utils.DateUtils;
 
 /**
@@ -43,6 +44,15 @@ public class DataDao {
     public RealmResults<TaskDetailEntity> findAllTask(int dayOfWeek) {
         return Realm.getDefaultInstance().where(TaskDetailEntity.class)
                 .equalTo("dayOfWeek", dayOfWeek)
+                .findAllSorted("timeStamp");
+    }
+
+    public RealmResults<TaskDetailEntity> findUnFinishedTasks(int dayOfWeek) {
+        return Realm
+                .getDefaultInstance()
+                .where(TaskDetailEntity.class)
+                .equalTo("dayOfWeek", dayOfWeek)
+                .notEqualTo("state", TaskState.FINISHED)
                 .findAllSorted("timeStamp");
     }
 

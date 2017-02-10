@@ -46,7 +46,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="其他">
+        android:title="夜间模式">
 
         <CheckBoxPreference
             android:defaultValue="true"
@@ -58,6 +58,18 @@
             android:defaultValue="false"
             android:key="NIGHT_MODE"
             android:title="夜间模式"
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="其它"
+        >
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="AUTO_NOTIFY"
+            android:title="智能提醒完成任务"
             />
 
     </PreferenceCategory>

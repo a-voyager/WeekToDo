@@ -220,12 +220,14 @@ public class NewActivity extends BaseActivity {
             mEtTitle.setFocusable(false);
             mEtTitle.setOnTouchListener((v, event) -> {
                 mEtTitle.setFocusableInTouchMode(true);
+                mFab.show();
                 return false;
             });
 
             mEtContent.setFocusable(false);
             mEtContent.setOnTouchListener((v, event) -> {
                 mEtContent.setFocusableInTouchMode(true);
+                mFab.show();
                 return false;
             });
 

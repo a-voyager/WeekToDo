@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -50,15 +51,25 @@ public class App extends Application {
 //        Bugly.init(getApplicationContext(), "684db223b4", true, strategy);
 
 
-        File file = new File(Constants.ExternalStorageDirectory, Constants.DATABASE_FILE_PATH_FOLDER);
-        file.mkdirs();
+        File file = null;
+        try {
+            file = new File(Constants.ExternalStorageDirectory, Constants.DATABASE_FILE_PATH_FOLDER);
+            file.mkdirs();
+        } catch (Exception e) {
+
+        }
 
         Realm.init(this);
         RealmConfiguration.Builder builder = new RealmConfiguration.Builder()
                 .name(Constants.DATABASE_FILE_PATH_FILE_NAME);
         // custom file not work on Android 7.0
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
-            builder.directory(file);
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N && file != null)
+        try {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N && file != null)
+                builder.directory(file);
+        } catch (Exception e) {
+            Toast.makeText(this, "为了得到更佳的用户体验, 请在设置中授予本应用相关权限", Toast.LENGTH_LONG).show();
+        }
         Realm.setDefaultConfiguration(builder.build());
 //        Fresco.initialize(this);
         ImageLoader.init(GlideImageLoader.create(this));

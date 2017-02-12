@@ -1,7 +1,6 @@
 package top.wuhaojie.week.base;
 
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,7 +13,7 @@ import top.wuhaojie.week.R;
  * Created by wuhaojie on 17-2-7.
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements BaseView {
 
     @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
@@ -25,10 +24,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutResID());
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
+        initInjector();
     }
 
-    protected abstract
-    @LayoutRes
-    int getLayoutResID();
+    protected void initInjector(){}
+
 
 }

@@ -117,7 +117,7 @@ public class MainActivity extends BaseActivity implements PageFragment.OnPageFra
     }
 
     @Override
-    protected int getLayoutResID() {
+    public int getLayoutResID() {
         return R.layout.activity_main;
     }
 

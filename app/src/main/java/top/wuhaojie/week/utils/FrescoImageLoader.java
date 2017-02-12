@@ -3,8 +3,6 @@ package top.wuhaojie.week.utils;
 import android.content.Context;
 import android.view.View;
 
-import top.wuhaojie.week.interfaces.ImageLoader;
-
 /**
  * Created by wuhaojie on 17-2-7.
  */

@@ -1,4 +1,4 @@
-package top.wuhaojie.week.interfaces;
+package top.wuhaojie.week.utils;
 
 import android.support.annotation.CallSuper;
 import android.view.View;

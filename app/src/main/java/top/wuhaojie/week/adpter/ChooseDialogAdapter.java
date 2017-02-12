@@ -14,7 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import top.wuhaojie.week.R;
 import top.wuhaojie.week.data.ImageFactory;
-import top.wuhaojie.week.interfaces.ImageLoader;
+import top.wuhaojie.week.utils.ImageLoader;
 
 /**
  * Created by wuhaojie on 2016/12/6 9:59.

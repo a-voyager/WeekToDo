@@ -17,7 +17,7 @@ import top.wuhaojie.week.R;
 import top.wuhaojie.week.data.ImageFactory;
 import top.wuhaojie.week.entities.TaskDetailEntity;
 import top.wuhaojie.week.entities.TaskState;
-import top.wuhaojie.week.interfaces.ImageLoader;
+import top.wuhaojie.week.utils.ImageLoader;
 
 /**
  * Created by wuhaojie on 2016/11/29 21:35.

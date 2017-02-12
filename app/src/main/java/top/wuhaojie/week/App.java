@@ -17,7 +17,7 @@ import java.io.IOException;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import top.wuhaojie.week.constant.Constants;
-import top.wuhaojie.week.interfaces.ImageLoader;
+import top.wuhaojie.week.utils.ImageLoader;
 import top.wuhaojie.week.utils.GlideImageLoader;
 
 /**

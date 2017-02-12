@@ -4,10 +4,6 @@ import android.content.Context;
 import android.os.Environment;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
-import android.view.View;
-
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,14 +37,14 @@ public class ExampleInstrumentedTest {
 
     @Test
     public void fresco(){
-        Fresco.initialize(InstrumentationRegistry.getTargetContext());
-        SimpleDraweeView simpleDraweeView = new SimpleDraweeView(InstrumentationRegistry.getContext());
-        View v = simpleDraweeView;
-        View v2 = new View(InstrumentationRegistry.getTargetContext());
-        boolean assignableFrom = SimpleDraweeView.class.isAssignableFrom(v.getClass());
-        boolean assignableFrom2 = SimpleDraweeView.class.isAssignableFrom(v2.getClass());
-        System.out.println(assignableFrom);
-        System.out.println(assignableFrom2);
+//        Fresco.initialize(InstrumentationRegistry.getTargetContext());
+//        SimpleDraweeView simpleDraweeView = new SimpleDraweeView(InstrumentationRegistry.getActivity());
+//        View v = simpleDraweeView;
+//        View v2 = new View(InstrumentationRegistry.getTargetContext());
+//        boolean assignableFrom = SimpleDraweeView.class.isAssignableFrom(v.getClass());
+//        boolean assignableFrom2 = SimpleDraweeView.class.isAssignableFrom(v2.getClass());
+//        System.out.println(assignableFrom);
+//        System.out.println(assignableFrom2);
     }
 
 }

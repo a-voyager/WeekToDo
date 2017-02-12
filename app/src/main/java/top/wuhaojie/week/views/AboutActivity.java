@@ -1,17 +1,24 @@
 package top.wuhaojie.week.views;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.OnClick;
-import top.wuhaojie.week.base.BaseActivity;
 import top.wuhaojie.week.R;
+import top.wuhaojie.week.base.BaseActivity;
+import top.wuhaojie.week.dagger.ActivityModule;
+import top.wuhaojie.week.dagger.DaggerActivityComponent;
+import top.wuhaojie.week.presenter.AboutHolder;
+import top.wuhaojie.week.presenter.AboutPresenter;
 
-public class AboutActivity extends BaseActivity {
+public class AboutActivity extends BaseActivity implements AboutHolder.View {
+
+    @Inject
+    AboutPresenter mPresenter;
 
     @BindView(R.id.open_network)
     Button mOpenNetwork;
@@ -21,27 +28,32 @@ public class AboutActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mPresenter.bindView(this);
     }
 
     @Override
-    protected int getLayoutResID() {
+    protected void initInjector() {
+        DaggerActivityComponent.builder().activityModule(new ActivityModule(this)).build().inject(this);
+    }
+
+    @Override
+    public int getLayoutResID() {
         return R.layout.activity_about;
     }
 
     @OnClick(R.id.open_network)
     public void onClick() {
-        Uri uri = Uri.parse("https://github.com/a-voyager/WeekToDo");
-        Intent it = new Intent(Intent.ACTION_VIEW, uri);
-        startActivity(it);
+        mPresenter.openNetworkOnclick();
     }
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return mPresenter.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void back() {
+        finish();
     }
 }

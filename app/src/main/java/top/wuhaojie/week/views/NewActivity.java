@@ -35,7 +35,7 @@ import top.wuhaojie.week.data.DataDao;
 import top.wuhaojie.week.data.ImageFactory;
 import top.wuhaojie.week.entities.TaskDetailEntity;
 import top.wuhaojie.week.entities.TaskState;
-import top.wuhaojie.week.interfaces.ImageLoader;
+import top.wuhaojie.week.utils.ImageLoader;
 import top.wuhaojie.week.utils.DateUtils;
 import top.wuhaojie.week.utils.DensityUtil;
 import top.wuhaojie.week.utils.SnackBarUtils;
@@ -310,7 +310,7 @@ public class NewActivity extends BaseActivity {
     }
 
     @Override
-    protected int getLayoutResID() {
+    public int getLayoutResID() {
         return R.layout.activity_new;
     }
 

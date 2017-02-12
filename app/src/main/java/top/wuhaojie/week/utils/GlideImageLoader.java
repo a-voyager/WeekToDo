@@ -15,8 +15,6 @@ import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
-import top.wuhaojie.week.interfaces.ImageLoader;
-
 /**
  * Created by wuhaojie on 17-2-7.
  */

@@ -170,7 +170,7 @@ public class NewActivity extends BaseActivity {
             mEtContent.requestFocus();
             int i = new Random(System.currentTimeMillis()).nextInt(mBgImgs.size());
             loadBgImgWithIndex(i);
-            String date = DateUtils.formateDate(System.currentTimeMillis());
+            String date = DateUtils.formatDate(System.currentTimeMillis());
             mTvDate.setText(date);
             mChoosePriorityAdapter.setCheckItem(0);
         }
@@ -192,7 +192,7 @@ public class NewActivity extends BaseActivity {
             mEtContent.requestFocus();
             int i = new Random(System.currentTimeMillis()).nextInt(mBgImgs.size());
             loadBgImgWithIndex(i);
-            String date = DateUtils.formateDate(System.currentTimeMillis());
+            String date = DateUtils.formatDate(System.currentTimeMillis());
             mTvDate.setText(date);
             mChoosePriorityAdapter.setCheckItem(0);
         }
@@ -237,7 +237,7 @@ public class NewActivity extends BaseActivity {
             mEtTitle.setText(mEntityFromMain.getTitle());
             mEtContent.setText(mEntityFromMain.getContent());
             loadBgImgWithUri(mEntityFromMain.getIcon());
-            String date = DateUtils.formateDate(mEntityFromMain.getTimeStamp());
+            String date = DateUtils.formatDate(mEntityFromMain.getTimeStamp());
             mTvDate.setText(date);
             mIvCurrPriority.setImageResource(ImageFactory.createPriorityIcons()[mEntityFromMain.getPriority()]);
             mChoosePriorityAdapter.setCheckItem(mEntityFromMain.getPriority());

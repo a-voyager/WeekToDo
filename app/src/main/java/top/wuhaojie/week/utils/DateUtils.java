@@ -42,13 +42,13 @@ public class DateUtils {
         static Date mDate = new Date();
     }
 
-    public static String formatDateTime(long time) {
+    public static synchronized String formatDateTime(long time) {
         if (time <= 0) throw new IllegalArgumentException("time shouldn't <= 0");
         FormatDateTimeHolder.mDate.setTime(time);
         return FormatDateTimeHolder.mSimpleDateTimeFormat.format(FormatDateTimeHolder.mDate);
     }
 
-    public static String formateDate(long time) {
+    public static synchronized String formatDate(long time) {
         if (time <= 0) throw new IllegalArgumentException("time shouldn't <= 0");
         FormatDateTimeHolder.mDate.setTime(time);
         return FormatDateTimeHolder.mSimpleDateFormat.format(FormatDateTimeHolder.mDate);

@@ -1,10 +1,8 @@
 package top.wuhaojie.week.dagger;
 
-import android.app.Activity;
-import android.content.Context;
-
 import dagger.Component;
 import top.wuhaojie.week.views.AboutActivity;
+import top.wuhaojie.week.views.MainActivity;
 
 /**
  * Author: wuhaojie
@@ -16,9 +14,6 @@ import top.wuhaojie.week.views.AboutActivity;
 @Component(modules = ActivityModule.class)
 public interface ActivityComponent {
     void inject(AboutActivity aboutActivity);
-
-    Activity activity();
-
-    Context context();
+    void inject(MainActivity aboutActivity);
 
 }

@@ -18,6 +18,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.realm.RealmResults;
@@ -28,6 +30,8 @@ import top.wuhaojie.week.R;
 import top.wuhaojie.week.adpter.MainPageAdapter;
 import top.wuhaojie.week.base.BaseActivity;
 import top.wuhaojie.week.constant.Constants;
+import top.wuhaojie.week.dagger.ActivityModule;
+import top.wuhaojie.week.dagger.DaggerActivityComponent;
 import top.wuhaojie.week.data.AlarmHelper;
 import top.wuhaojie.week.data.DataDao;
 import top.wuhaojie.week.data.PageFactory;
@@ -35,11 +39,13 @@ import top.wuhaojie.week.entities.MainPageItem;
 import top.wuhaojie.week.entities.TaskDetailEntity;
 import top.wuhaojie.week.entities.TaskState;
 import top.wuhaojie.week.fragments.PageFragment;
+import top.wuhaojie.week.presenter.MainHolder;
+import top.wuhaojie.week.presenter.MainPresenter;
 import top.wuhaojie.week.utils.DateUtils;
 import top.wuhaojie.week.utils.PreferenceUtils;
 import top.wuhaojie.week.utils.SnackBarUtils;
 
-public class MainActivity extends BaseActivity implements PageFragment.OnPageFragmentInteractionListener {
+public class MainActivity extends BaseActivity implements PageFragment.OnPageFragmentInteractionListener, MainHolder.View {
 
     public static final String TAG = "MainActivity";
     @BindView(R.id.tab)
@@ -53,9 +59,14 @@ public class MainActivity extends BaseActivity implements PageFragment.OnPageFra
     private List<MainPageItem> mItems;
     private int mLastClickedItemPosition;
 
+    @Inject
+    MainPresenter mPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mPresenter.bindView(this);
 
         mItems = PageFactory.createPages();
 
@@ -124,7 +135,7 @@ public class MainActivity extends BaseActivity implements PageFragment.OnPageFra
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        mPresenter.onBackPressed();
     }
 
     @Override
@@ -284,12 +295,6 @@ public class MainActivity extends BaseActivity implements PageFragment.OnPageFra
     }
 
     private Subscription deleteTaskWithDelay(int position, TaskDetailEntity entity) {
-//        Message message = new Message();
-//        message.what = Constants.HANDLER_WHAT_DELETE_TASK;
-//        message.obj = entity;
-//        message.arg1 = position;
-//        mHandler.sendMessageDelayed(message, 2000);
-
         return Observable.just(1)
                 .delay(2, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -308,6 +313,15 @@ public class MainActivity extends BaseActivity implements PageFragment.OnPageFra
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void initInjector() {
+        DaggerActivityComponent.builder().activityModule(new ActivityModule(this)).build().inject(this);
+    }
+
+    @Override
+    public void back() {
+        finish();
     }
 }

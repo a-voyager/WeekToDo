@@ -53,6 +53,8 @@ public class MainPresenter implements MainHolder.Presenter {
     List<MainPageItem> mItems;
     @Inject
     MainPageAdapter mAdapter;
+    @Inject
+    DataDao mDataDao;
 
     @Inject
     public MainPresenter(Context context) {
@@ -113,12 +115,11 @@ public class MainPresenter implements MainHolder.Presenter {
         }
 
 
-        DataDao dataDao = DataDao.getInstance();
         RealmResults<TaskDetailEntity> allTask = null;
         if (PreferenceUtils.getInstance(mContext).getBooleanParam(Constants.CONFIG_KEY.SHOW_WEEK_TASK))
-            allTask = dataDao.findAllTaskOfThisWeekFromSunday();
+            allTask = mDataDao.findAllTaskOfThisWeekFromSunday();
         else
-            allTask = dataDao.findAllTask();
+            allTask = mDataDao.findAllTask();
         for (TaskDetailEntity t : allTask) {
             int day = t.getDayOfWeek();
             PageFragment fragment = (PageFragment) mItems.get(day - 1).getFragment();
@@ -149,7 +150,7 @@ public class MainPresenter implements MainHolder.Presenter {
     @Override
     public void onDestroy() {
         mItems = null;
-        DataDao.getInstance().close();
+        mDataDao.close();
     }
 
     @Override
@@ -158,15 +159,14 @@ public class MainPresenter implements MainHolder.Presenter {
         Bundle bundle = data.getExtras();
         TaskDetailEntity task = (TaskDetailEntity) bundle.getSerializable(Constants.INTENT_BUNDLE_NEW_TASK_DETAIL);
         PageFragment fragment = (PageFragment) mItems.get(mView.getCurrentViewPagerItem()).getFragment();
-        DataDao dao = DataDao.getInstance();
 
         if (requestCode == Constants.NEW_ACTIVITY_REQUEST_CODE) {
             fragment.insertTask(task);
-            dao.insertTask(task);
+            mDataDao.insertTask(task);
         } else if (requestCode == Constants.EDIT_ACTIVITY_REQUEST_CODE) {
             TaskDetailEntity oldTask = fragment.deleteTask(mLastClickedItemPosition);
             fragment.insertTask(task);
-            dao.editTask(oldTask, task);
+            mDataDao.editTask(oldTask, task);
         }
 
     }
@@ -220,10 +220,7 @@ public class MainPresenter implements MainHolder.Presenter {
 
     private void switchTaskState(int position, TaskDetailEntity entity, int newState) {
         PageFragment fragment = (PageFragment) mItems.get(mView.getCurrentViewPagerItem()).getFragment();
-
-        DataDao dao = DataDao.getInstance();
-        dao.switchTaksState(entity, newState);
-
+        mDataDao.switchTaksState(entity, newState);
         fragment.getAdapter().notifyItemChanged(position);
     }
 
@@ -245,9 +242,8 @@ public class MainPresenter implements MainHolder.Presenter {
         TaskDetailEntity newEntity = oldEntity.cloneObj();
         newEntity.setDayOfWeek(DateUtils.calNextDayDayOfWeek(oldEntity.getDayOfWeek()));
         ((PageFragment) mItems.get(newEntity.getDayOfWeek() - 1).getFragment()).insertTask(newEntity);
-        DataDao dao = DataDao.getInstance();
-        dao.insertTask(newEntity);
-        dao.deleteTask(oldEntity);
+        mDataDao.insertTask(newEntity);
+        mDataDao.deleteTask(oldEntity);
 
     }
 

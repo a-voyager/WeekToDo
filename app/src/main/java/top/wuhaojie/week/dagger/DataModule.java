@@ -4,6 +4,7 @@ import java.util.List;
 
 import dagger.Module;
 import dagger.Provides;
+import top.wuhaojie.week.data.DataDao;
 import top.wuhaojie.week.data.PageFactory;
 import top.wuhaojie.week.entities.MainPageItem;
 
@@ -19,6 +20,11 @@ public class DataModule {
     @Provides
     public List<MainPageItem> pages() {
         return PageFactory.createPages();
+    }
+
+    @Provides
+    public DataDao dataDao() {
+        return DataDao.getInstance();
     }
 
 }

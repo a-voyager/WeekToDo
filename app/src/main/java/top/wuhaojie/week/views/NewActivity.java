@@ -381,5 +381,13 @@ public class NewActivity extends BaseActivity {
         return true;
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mChoosePriorityAdapter = null;
+        mEntityFromMain = null;
+        mState = null;
+        mRvChoosePriority = null;
+        mIvBg = null;
+    }
 }

@@ -1,4 +1,4 @@
-# 番茄周 v1.1.3
+# 番茄周 v1.1.4
 ![image](https://github.com/a-voyager/WeekToDo/raw/master/imgs/icon.png "效果图")
 
 [下载 APK 体验][1]
@@ -23,11 +23,13 @@
 |Material-Ripple| 水波纹特效    |
 | RxAndroid     | 响应式编程    |
 | Glide         | 图片加载库    |
+| Dagger2       | 依赖注入库    |
 
 # 更新日志
 
 ### v1.1.4
  - 修复部分设备闪退问题
+ - 重构项目为 MVP 架构
 
 ### v1.1.3
  - 增加智能提醒功能

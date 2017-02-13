@@ -43,10 +43,7 @@ public class ChoosePaperColorDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
-
         dialog.setTitle("选择背景图片");
-
-
         return dialog;
     }
 
@@ -69,4 +66,10 @@ public class ChoosePaperColorDialog extends DialogFragment {
     }
 
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mChooseDialogAdapter = null;
+        mRvDlChooseColor = null;
+    }
 }

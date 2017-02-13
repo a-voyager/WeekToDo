@@ -32,7 +32,7 @@ public class AboutActivity extends BaseActivity implements AboutHolder.View {
     }
 
     @Override
-    protected void initInjector() {
+    public void initializeInjector() {
         DaggerActivityComponent.builder().activityModule(new ActivityModule(this)).build().inject(this);
     }
 

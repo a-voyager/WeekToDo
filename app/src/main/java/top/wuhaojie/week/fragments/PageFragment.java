@@ -75,13 +75,13 @@ public class PageFragment extends Fragment {
             @Override
             public void onItemClick(int position, TaskDetailEntity entity) {
                 if (mListener != null)
-                    mListener.toEditActivity(position, entity);
+                    mListener.onListTaskItemClick(position, entity);
             }
 
             @Override
             public void onItemLongClick(int position, TaskDetailEntity entity) {
                 if (mListener != null)
-                    mListener.showContextMenu(position, entity);
+                    mListener.onListTaskItemLongClick(position, entity);
             }
         });
         mRv.setAdapter(mAdapter);
@@ -125,9 +125,9 @@ public class PageFragment extends Fragment {
     }
 
     public interface OnPageFragmentInteractionListener {
-        void toEditActivity(int position, TaskDetailEntity entity);
+        void onListTaskItemClick(int position, TaskDetailEntity entity);
 
-        void showContextMenu(int position, TaskDetailEntity entity);
+        void onListTaskItemLongClick(int position, TaskDetailEntity entity);
     }
 
 

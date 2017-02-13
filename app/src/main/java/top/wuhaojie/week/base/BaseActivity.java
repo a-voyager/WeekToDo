@@ -1,6 +1,7 @@
 package top.wuhaojie.week.base;
 
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -8,12 +9,13 @@ import android.support.v7.widget.Toolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import top.wuhaojie.week.R;
+import top.wuhaojie.week.dagger.Injectable;
 
 /**
  * Created by wuhaojie on 17-2-7.
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements BaseView {
+public abstract class BaseActivity extends AppCompatActivity implements BaseView, Injectable {
 
     @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
@@ -23,11 +25,18 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResID());
         ButterKnife.bind(this);
-        setSupportActionBar(mToolbar);
-        initInjector();
+        initializeViews();
+        initializeInjector();
     }
 
-    protected void initInjector(){}
+    @CallSuper
+    protected void initializeViews() {
+        setSupportActionBar(mToolbar);
+    }
 
 
+    @Override
+    public void initializeInjector() {
+
+    }
 }

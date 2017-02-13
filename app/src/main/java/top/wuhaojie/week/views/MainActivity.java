@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatDelegate;
@@ -52,8 +51,6 @@ public class MainActivity extends BaseActivity implements PageFragment.OnPageFra
     TabLayout mTab;
     @BindView(R.id.vp)
     ViewPager mVp;
-    @BindView(R.id.fab)
-    FloatingActionButton mFab;
     @BindView(R.id.cl_main)
     CoordinatorLayout mClMain;
     private List<MainPageItem> mItems;
@@ -61,19 +58,22 @@ public class MainActivity extends BaseActivity implements PageFragment.OnPageFra
 
     @Inject
     MainPresenter mPresenter;
+    @Inject
+    MainPageAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mPresenter.bindView(this);
+        mPresenter.onCreate(savedInstanceState);
 
         mItems = PageFactory.createPages();
 
-        MainPageAdapter adapter = new MainPageAdapter(getSupportFragmentManager(), mItems);
+//        mAdapter = new MainPageAdapter(getSupportFragmentManager(), mItems);
 
         mTab.setupWithViewPager(mVp);
-        mVp.setAdapter(adapter);
+        mVp.setAdapter(mAdapter);
 
 
         int currIndex;
@@ -147,17 +147,7 @@ public class MainActivity extends BaseActivity implements PageFragment.OnPageFra
 
     @OnClick(R.id.fab)
     public void onClick() {
-//        DataDao dao = DataDao.getInstance();
-//        int i = mVp.getCurrentItem();
-//        dao.insertTask(new TaskDetailEntity(i + 1));
-//        Log.d(TAG, "insert：" + (i + 1));
-
-        int i = mVp.getCurrentItem();
-        Intent intent = new Intent(this, NewActivity.class);
-        intent.putExtra(Constants.INTENT_EXTRA_DAY_OF_WEEK, i + 1);
-        intent.putExtra(Constants.INTENT_EXTRA_MODE_OF_NEW_ACT, Constants.MODE_OF_NEW_ACT.MODE_CREATE);
-        startActivityForResult(intent, Constants.NEW_ACTIVITY_REQUEST_CODE);
-
+        mPresenter.onFabClick();
     }
 
     @Override
@@ -168,16 +158,7 @@ public class MainActivity extends BaseActivity implements PageFragment.OnPageFra
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                Intent intent = new Intent(this, SettingsActivity.class);
-                intent.putExtra(Constants.INTENT_EXTRA_SWITCH_TO_INDEX, mVp.getCurrentItem());
-                startActivity(intent);
-                finish();
-                break;
-        }
-
-        return true;
+        return mPresenter.onOptionsItemSelected(item);
     }
 
     @Override
@@ -321,7 +302,17 @@ public class MainActivity extends BaseActivity implements PageFragment.OnPageFra
     }
 
     @Override
-    public void back() {
+    public int getCurrentViewPagerItem() {
+        return mVp.getCurrentItem();
+    }
+
+    @Override
+    public void startActivityAndForResult(Intent intent, int newActivityRequestCode) {
+        startActivityForResult(intent, newActivityRequestCode);
+    }
+
+    @Override
+    public void finishActivity() {
         finish();
     }
 }

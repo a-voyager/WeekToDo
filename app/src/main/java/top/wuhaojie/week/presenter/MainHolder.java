@@ -1,5 +1,9 @@
 package top.wuhaojie.week.presenter;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import top.wuhaojie.week.base.BasePresenter;
 import top.wuhaojie.week.base.BaseView;
 
@@ -12,11 +16,22 @@ import top.wuhaojie.week.base.BaseView;
 
 public interface MainHolder {
 
-    interface View extends BaseView{
-        void back();
+    interface View extends BaseView {
+
+        int getCurrentViewPagerItem();
+
+        void startActivityAndForResult(Intent intent, int newActivityRequestCode);
+
+        void finishActivity();
     }
 
-    interface Presenter extends BasePresenter{
+    interface Presenter extends BasePresenter {
         void onBackPressed();
+
+        void onFabClick();
+
+        boolean onOptionsItemSelected(MenuItem item);
+
+        void onCreate(Bundle savedInstanceState);
     }
 }

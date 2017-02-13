@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import top.wuhaojie.week.entities.MainPageItem;
 
 /**
@@ -16,6 +18,7 @@ public class MainPageAdapter extends FragmentPagerAdapter {
 
     private List<MainPageItem> mPageItems;
 
+    @Inject
     public MainPageAdapter(FragmentManager fm, List<MainPageItem> pageItems) {
         super(fm);
         mPageItems = pageItems;

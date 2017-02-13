@@ -1,6 +1,8 @@
 package top.wuhaojie.week.dagger;
 
 import dagger.Component;
+import top.wuhaojie.week.adpter.MainPageAdapter;
+import top.wuhaojie.week.presenter.MainPresenter;
 import top.wuhaojie.week.views.AboutActivity;
 import top.wuhaojie.week.views.MainActivity;
 
@@ -11,9 +13,14 @@ import top.wuhaojie.week.views.MainActivity;
  * Version: 1.0
  */
 
-@Component(modules = ActivityModule.class)
+@Component(modules = {ActivityModule.class, DataModule.class})
 public interface ActivityComponent {
     void inject(AboutActivity aboutActivity);
+
     void inject(MainActivity aboutActivity);
+
+    void inject(MainPresenter presenter);
+
+    void inject(MainPageAdapter adapter);
 
 }

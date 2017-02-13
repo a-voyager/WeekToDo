@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialLayout="@layout/widget_new_task"
+    android:minHeight="56dp"
+    android:minWidth="272dp"
+    android:resizeMode="horizontal"
+    android:updatePeriodMillis="43200000"/>

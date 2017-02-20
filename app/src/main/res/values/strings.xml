@@ -20,6 +20,8 @@
     <string name="shortcut_disable_label">不可编辑</string>
     <string name="shortcut_long_label">添加任务</string>
     <string name="shortcut_short_label">添加任务</string>
+    <string name="app_label">番茄周</string>
+    <string name="search_hint">搜索</string>
 
 
 </resources>

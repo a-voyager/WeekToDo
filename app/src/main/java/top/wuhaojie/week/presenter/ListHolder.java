@@ -1,5 +1,8 @@
 package top.wuhaojie.week.presenter;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import top.wuhaojie.week.base.BasePresenter;
 import top.wuhaojie.week.base.BaseView;
 
@@ -14,9 +17,13 @@ public interface ListHolder {
 
 
     interface View extends BaseView {
+        Intent intent();
+
+        void updateToolbarTitle(String s);
     }
 
     interface Presenter extends BasePresenter {
+        void onCreate(Bundle savedInstanceState);
     }
 
 }

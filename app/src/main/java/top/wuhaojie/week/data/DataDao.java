@@ -1,7 +1,12 @@
 package top.wuhaojie.week.data;
 
+import android.text.TextUtils;
+
+import java.util.List;
+
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import top.wuhaojie.week.entities.TaskDetailEntity;
 import top.wuhaojie.week.entities.TaskState;
 import top.wuhaojie.week.utils.DateUtils;
@@ -87,6 +92,16 @@ public class DataDao {
         });
 
 
+    }
+
+
+    public List<TaskDetailEntity> search(String like) {
+        if (TextUtils.isEmpty(like)) throw new IllegalArgumentException("str is null");
+        return Realm.getDefaultInstance().where(TaskDetailEntity.class)
+                .contains("content", like)
+                .or()
+                .contains("title", like)
+                .findAllSorted("timeStamp", Sort.DESCENDING);
     }
 
 

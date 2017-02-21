@@ -22,6 +22,7 @@
     <string name="shortcut_short_label">添加任务</string>
     <string name="app_label">番茄周</string>
     <string name="search_hint">搜索</string>
+    <string name="title_activity_list">任务</string>
 
 
 </resources>

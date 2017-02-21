@@ -4,6 +4,7 @@ import dagger.Component;
 import top.wuhaojie.week.adpter.MainPageAdapter;
 import top.wuhaojie.week.presenter.MainPresenter;
 import top.wuhaojie.week.views.AboutActivity;
+import top.wuhaojie.week.views.ListActivity;
 import top.wuhaojie.week.views.MainActivity;
 
 /**
@@ -22,5 +23,7 @@ public interface ActivityComponent {
     void inject(MainPresenter presenter);
 
     void inject(MainPageAdapter adapter);
+
+    void inject(ListActivity adapter);
 
 }

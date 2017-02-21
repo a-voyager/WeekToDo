@@ -3,8 +3,11 @@ package top.wuhaojie.week.presenter;
 import android.content.Intent;
 import android.os.Bundle;
 
+import java.util.List;
+
 import top.wuhaojie.week.base.BasePresenter;
 import top.wuhaojie.week.base.BaseView;
+import top.wuhaojie.week.entities.TaskDetailEntity;
 
 /**
  * Author: wuhaojie
@@ -20,10 +23,18 @@ public interface ListHolder {
         Intent intent();
 
         void updateToolbarTitle(String s);
+
+        void showNoResults();
+
+        void hideNoResults();
+
+        void updateList(List<TaskDetailEntity> list);
     }
 
     interface Presenter extends BasePresenter {
         void onCreate(Bundle savedInstanceState);
+
+        void onDestroy();
     }
 
 }

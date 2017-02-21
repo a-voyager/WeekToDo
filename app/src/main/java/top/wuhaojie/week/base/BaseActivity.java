@@ -25,8 +25,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResID());
         ButterKnife.bind(this);
+        initializeInjector();   // 在 initializeViews() 可能会用到依赖注入的属性
         initializeViews();
-        initializeInjector();
     }
 
     @CallSuper

@@ -46,6 +46,11 @@ public class ListPresenter implements ListHolder.Presenter {
         handleIntent(mView.intent());
     }
 
+    @Override
+    public void onDestroy() {
+
+    }
+
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
@@ -57,7 +62,14 @@ public class ListPresenter implements ListHolder.Presenter {
     private void doSearch(String query) {
         List<TaskDetailEntity> list = mDataDao.search(query);
         int size = list.size();
+        mView.hideNoResults();
+        if (size == 0) {
+            mView.updateToolbarTitle("查找完成");
+            mView.showNoResults();
+            return;
+        }
         mView.updateToolbarTitle("找到 " + size + " 条记录");
-        Log.d(TAG, "doSearch: "+list);
+        mView.updateList(list);
+        Log.d(TAG, "doSearch: " + list);
     }
 }

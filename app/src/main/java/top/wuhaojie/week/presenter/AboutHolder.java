@@ -1,5 +1,6 @@
 package top.wuhaojie.week.presenter;
 
+import android.os.Bundle;
 import android.view.MenuItem;
 
 import top.wuhaojie.week.base.BasePresenter;
@@ -16,12 +17,16 @@ public interface AboutHolder {
 
     interface View extends BaseView {
         void back();
+
+        void updateVersionView(String versionName);
     }
 
     interface Presenter extends BasePresenter {
         void openNetworkOnclick();
 
         boolean onOptionsItemSelected(MenuItem item);
+
+        void onCreate(Bundle savedInstanceState);
     }
 
 }

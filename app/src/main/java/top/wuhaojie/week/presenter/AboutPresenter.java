@@ -3,10 +3,12 @@ package top.wuhaojie.week.presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.MenuItem;
 
 import javax.inject.Inject;
 
+import top.wuhaojie.week.BuildConfig;
 import top.wuhaojie.week.base.BaseView;
 
 /**
@@ -44,5 +46,11 @@ public class AboutPresenter implements AboutHolder.Presenter {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        String versionName = "番茄周  " + "v" + BuildConfig.VERSION_NAME;
+        mView.updateVersionView(versionName);
     }
 }

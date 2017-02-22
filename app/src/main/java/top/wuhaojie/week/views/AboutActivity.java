@@ -3,6 +3,7 @@ package top.wuhaojie.week.views;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
@@ -22,6 +23,8 @@ public class AboutActivity extends BaseActivity implements AboutHolder.View {
 
     @BindView(R.id.open_network)
     Button mOpenNetwork;
+    @BindView(R.id.tv_version)
+    TextView mTvVersion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,7 @@ public class AboutActivity extends BaseActivity implements AboutHolder.View {
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mPresenter.bindView(this);
+        mPresenter.onCreate(savedInstanceState);
     }
 
     @Override
@@ -55,5 +59,10 @@ public class AboutActivity extends BaseActivity implements AboutHolder.View {
     @Override
     public void back() {
         finish();
+    }
+
+    @Override
+    public void updateVersionView(String versionName) {
+        mTvVersion.setText(versionName);
     }
 }

@@ -5,15 +5,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import top.wuhaojie.week.R;
 import top.wuhaojie.week.entities.TaskDetailEntity;
+import top.wuhaojie.week.entities.TaskState;
+import top.wuhaojie.week.utils.DateUtils;
 
 /**
  * Author: wuhaojie
@@ -57,13 +61,31 @@ public class ListAdapter extends RecyclerView.Adapter {
 
     class Holder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.tv_title)
+        TextView mTvTitle;
+        @BindView(R.id.tv_content)
+        TextView mTvContent;
+        @BindView(R.id.tv_date)
+        TextView mTvDate;
+        @BindView(R.id.tv_state)
+        TextView mTvState;
+
         Holder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
         public void setView(TaskDetailEntity entity) {
-
+            String title = entity.getTitle();
+            mTvTitle.setText(title);
+            String content = entity.getContent();
+            mTvContent.setText(content);
+            long timeStamp = entity.getTimeStamp();
+            String date = DateUtils.formatDateWeek(timeStamp);
+            mTvDate.setText(date);
+            int state = entity.getState();
+            String sState = (state == TaskState.FINISHED) ? "已完成" : "未完成";
+            mTvState.setText(sState);
         }
     }
 

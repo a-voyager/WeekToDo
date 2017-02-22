@@ -39,6 +39,7 @@ public class DateUtils {
     private static class FormatDateTimeHolder {
         static SimpleDateFormat mSimpleDateTimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.CHINA);
         static SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.CHINA);
+        static SimpleDateFormat mSimpleDateWeekFormat = new SimpleDateFormat("yyyy年M月d日 EEEE", Locale.CHINA);
         static Date mDate = new Date();
     }
 
@@ -52,6 +53,12 @@ public class DateUtils {
         if (time <= 0) throw new IllegalArgumentException("time shouldn't <= 0");
         FormatDateTimeHolder.mDate.setTime(time);
         return FormatDateTimeHolder.mSimpleDateFormat.format(FormatDateTimeHolder.mDate);
+    }
+
+    public static synchronized String formatDateWeek(long time) {
+        if (time <= 0) throw new IllegalArgumentException("time shouldn't <= 0");
+        FormatDateTimeHolder.mDate.setTime(time);
+        return FormatDateTimeHolder.mSimpleDateWeekFormat.format(FormatDateTimeHolder.mDate);
     }
 
 

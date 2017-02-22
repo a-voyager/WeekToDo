@@ -51,6 +51,7 @@ public class AboutPresenter implements AboutHolder.Presenter {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         String versionName = "番茄周  " + "v" + BuildConfig.VERSION_NAME;
+        if (BuildConfig.DEBUG) versionName += " (调试版)";
         mView.updateVersionView(versionName);
     }
 }

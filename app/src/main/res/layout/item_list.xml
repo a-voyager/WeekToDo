@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="任务标题"
-            android:textColor="#D000"
+            android:textColor="@color/listTitle"
             android:textSize="18sp"/>
 
 
@@ -28,7 +28,7 @@
             android:layout_marginTop="4dp"
             android:maxLines="2"
             android:text="任务正文内容，这里最多显示的行数是有限制的，不能显示太多"
-            android:textColor="#A000"
+            android:textColor="@color/listContent"
             android:textSize="15sp"/>
 
         <View

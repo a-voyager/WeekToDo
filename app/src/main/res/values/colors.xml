@@ -16,4 +16,7 @@
     <color name="iv_mask_task_item">#CFFF</color>
     <color name="color_mask_icon_task_item">#6FFF</color>
 
+    <color name="listTitle">#D000</color>
+    <color name="listContent">#A000</color>
+
 </resources>

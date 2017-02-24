@@ -63,6 +63,7 @@ public class ListActivity extends BaseActivity implements ListHolder.View {
         super.initializeViews();
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mListAdapter.setListener((position, entity) -> mPresenter.onItemClick(position, entity));
         mList.setLayoutManager(new LinearLayoutManager(this));
         mList.setAdapter(mListAdapter);
     }
@@ -91,6 +92,16 @@ public class ListActivity extends BaseActivity implements ListHolder.View {
     @Override
     public void updateList(List<TaskDetailEntity> list) {
         mListAdapter.setList(list);
+    }
+
+    @Override
+    public void startActivityAndForResult(Intent intent, int requestCode) {
+        startActivityForResult(intent, requestCode);
+    }
+
+    @Override
+    public void finishActivity() {
+        finish();
     }
 
 

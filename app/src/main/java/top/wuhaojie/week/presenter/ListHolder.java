@@ -29,12 +29,18 @@ public interface ListHolder {
         void hideNoResults();
 
         void updateList(List<TaskDetailEntity> list);
+
+        void startActivityAndForResult(Intent intent, int requestCode);
+
+        void finishActivity();
     }
 
     interface Presenter extends BasePresenter {
         void onCreate(Bundle savedInstanceState);
 
         void onDestroy();
+
+        void onItemClick(int position, TaskDetailEntity entity);
     }
 
 }

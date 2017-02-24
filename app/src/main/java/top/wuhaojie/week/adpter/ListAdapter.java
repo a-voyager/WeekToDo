@@ -59,6 +59,17 @@ public class ListAdapter extends RecyclerView.Adapter {
     }
 
 
+    private OnItemClickListener mListener;
+
+    public void setListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position, TaskDetailEntity entity);
+    }
+
+
     class Holder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.tv_title)
@@ -73,6 +84,10 @@ public class ListAdapter extends RecyclerView.Adapter {
         Holder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (mListener != null) mListener.onItemClick(position, mList.get(position));
+            });
         }
 
         public void setView(TaskDetailEntity entity) {

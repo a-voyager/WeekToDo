@@ -12,7 +12,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import top.wuhaojie.week.base.BaseView;
+import top.wuhaojie.week.constant.Constants;
 import top.wuhaojie.week.data.DataDao;
+import top.wuhaojie.week.data.InstrumentHelper;
 import top.wuhaojie.week.entities.TaskDetailEntity;
 
 /**
@@ -49,6 +51,13 @@ public class ListPresenter implements ListHolder.Presenter {
     @Override
     public void onDestroy() {
 
+    }
+
+    @Override
+    public void onItemClick(int position, TaskDetailEntity entity) {
+        Intent intent = InstrumentHelper.toEditActivity(mContext, position, entity);
+        mView.finishActivity();
+        mView.startActivityAndForResult(intent, Constants.EDIT_ACTIVITY_REQUEST_CODE);
     }
 
     private void handleIntent(Intent intent) {

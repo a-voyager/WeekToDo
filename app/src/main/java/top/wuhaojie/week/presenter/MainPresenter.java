@@ -23,6 +23,7 @@ import top.wuhaojie.week.base.BaseView;
 import top.wuhaojie.week.constant.Constants;
 import top.wuhaojie.week.data.AlarmHelper;
 import top.wuhaojie.week.data.DataDao;
+import top.wuhaojie.week.data.InstrumentHelper;
 import top.wuhaojie.week.entities.MainPageItem;
 import top.wuhaojie.week.entities.TaskDetailEntity;
 import top.wuhaojie.week.entities.TaskState;
@@ -177,9 +178,7 @@ public class MainPresenter implements MainHolder.Presenter {
     }
 
     private void toEditActivity(int position, TaskDetailEntity entity) {
-        Intent intent = new Intent(mContext, NewActivity.class);
-        intent.putExtra(Constants.INTENT_EXTRA_EDIT_TASK_DETAIL_ENTITY, entity.cloneObj());
-        intent.putExtra(Constants.INTENT_EXTRA_MODE_OF_NEW_ACT, Constants.MODE_OF_NEW_ACT.MODE_EDIT);
+        Intent intent = InstrumentHelper.toEditActivity(mContext, position, entity);
         mView.startActivityAndForResult(intent, Constants.EDIT_ACTIVITY_REQUEST_CODE);
         mLastClickedItemPosition = position;
     }

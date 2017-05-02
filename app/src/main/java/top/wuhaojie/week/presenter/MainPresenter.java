@@ -142,6 +142,8 @@ public class MainPresenter implements MainHolder.Presenter {
         // 智能提醒未完成任务
         if (PreferenceUtils.getInstance(mContext).getBooleanParam(Constants.CONFIG_KEY.AUTO_NOTIFY, false))
             AlarmHelper.startNotifyAlarm(mContext);
+        else
+            AlarmHelper.cancelNotifyAlarm(mContext);
 
         // 清除通知
         NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(NOTIFICATION_SERVICE);

@@ -15,6 +15,7 @@ import top.wuhaojie.week.R;
 import top.wuhaojie.week.constant.Constants;
 import top.wuhaojie.week.data.DataDao;
 import top.wuhaojie.week.entities.TaskDetailEntity;
+import top.wuhaojie.week.utils.DateUtils;
 import top.wuhaojie.week.views.MainActivity;
 
 public class NotifyService extends Service {
@@ -31,8 +32,9 @@ public class NotifyService extends Service {
 
 
         int code = super.onStartCommand(intent, flags, startId);
+        long sundayTimeMillisOfWeek = DateUtils.getFirstSundayTimeMillisOfWeek();
         int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-        RealmResults<TaskDetailEntity> results = DataDao.getInstance().findUnFinishedTasks(day);
+        RealmResults<TaskDetailEntity> results = DataDao.getInstance().findUnFinishedTasks(day, sundayTimeMillisOfWeek);
         if (results.size() == 0) return code;
         StringBuilder sb = new StringBuilder();
         sb.append("包含: ");

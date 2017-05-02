@@ -53,11 +53,16 @@ public class DataDao {
     }
 
     public RealmResults<TaskDetailEntity> findUnFinishedTasks(int dayOfWeek) {
+        return findUnFinishedTasks(dayOfWeek, 0);
+    }
+
+    public RealmResults<TaskDetailEntity> findUnFinishedTasks(int dayOfWeek, long since) {
         return Realm
                 .getDefaultInstance()
                 .where(TaskDetailEntity.class)
                 .equalTo("dayOfWeek", dayOfWeek)
                 .notEqualTo("state", TaskState.FINISHED)
+                .greaterThanOrEqualTo("timeStamp", since)
                 .findAllSorted("timeStamp");
     }
 
